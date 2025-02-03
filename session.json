@@ -1,0 +1,136 @@
+{
+  "session": {
+    "topic": "Creating a Static Blog Generator",
+    "date": "2024-03-20",
+    "interactions": [
+      {
+        "prompt": "Can you create a basic blog webpage for me that follows best practices, is simple and smart looking, and suitable for a professional geeky audience?",
+        "response": {
+          "files_created": [
+            "index.html",
+            "styles.css"
+          ],
+          "description": "Created a clean, responsive blog template with modern styling"
+        }
+      },
+      {
+        "prompt": "Thanks! That looks really good. Can you convert the html to pugjs?",
+        "response": {
+          "files_created": ["index.pug"],
+          "description": "Converted HTML template to Pug syntax"
+        }
+      },
+      {
+        "prompt": "What is the keyboard shortcut to commit this message?",
+        "response": {
+          "type": "information",
+          "content": "Discussed Git commit shortcuts"
+        }
+      },
+      {
+        "prompt": "I'm using Cursor (obviously)",
+        "response": {
+          "type": "information",
+          "content": "Provided Cursor-specific shortcuts"
+        }
+      },
+      {
+        "prompt": "I tried that and it doesn't work",
+        "response": {
+          "type": "information",
+          "content": "Provided alternative commit methods"
+        }
+      },
+      {
+        "prompt": "Can you convert styles.css to stylus please?",
+        "response": {
+          "files_created": ["styles.styl"],
+          "description": "Converted CSS to Stylus syntax"
+        }
+      },
+      {
+        "prompt": "Can you add a pug template that would be for each article?",
+        "response": {
+          "files_created": [
+            "article.pug",
+            "styles.styl"
+          ],
+          "description": "Created article template and added article-specific styles"
+        }
+      },
+      {
+        "prompt": "Thanks, is there a way to add metadata to markdown files?",
+        "response": {
+          "files_created": ["posts/example-post.md"],
+          "description": "Demonstrated frontmatter usage in markdown"
+        }
+      },
+      {
+        "prompt": "Can you make the front matter in example-post.md match the variables that you gave me earlier, please?",
+        "response": {
+          "files_updated": ["posts/example-post.md"],
+          "description": "Updated frontmatter to match template variables"
+        }
+      },
+      {
+        "prompt": "Please write a script that renders each file in the posts folder using the article.pug template",
+        "response": {
+          "files_created": ["scripts/build-posts.js"],
+          "description": "Created build script for processing markdown files"
+        }
+      },
+      {
+        "prompt": "I get the error 'Error building posts: TypeError: marked is not a function' when I try to run the script",
+        "response": {
+          "files_updated": ["scripts/build-posts.js"],
+          "description": "Fixed marked import syntax"
+        }
+      },
+      {
+        "prompt": "Can you create a gitignore file with all the right entries in it for this project?",
+        "response": {
+          "files_created": [".gitignore"],
+          "description": "Created comprehensive gitignore file"
+        }
+      },
+      {
+        "prompt": "Can you create a file called prompts.txt that summarises the prompts that I have given you in this session?",
+        "response": {
+          "files_created": ["prompts.txt"],
+          "description": "Created summary of session prompts"
+        }
+      },
+      {
+        "prompt": "Actually, can you put the whole session in a json file, please?",
+        "response": {
+          "files_created": ["session.json"],
+          "description": "Created JSON summary of entire session"
+        }
+      }
+    ],
+    "project_structure": {
+      "root": "/",
+      "files": [
+        "index.pug",
+        "article.pug",
+        "styles.styl",
+        ".gitignore",
+        "prompts.txt",
+        "session.json"
+      ],
+      "directories": {
+        "posts": ["example-post.md"],
+        "scripts": ["build-posts.js"],
+        "dist": {
+          "articles": "/* Built HTML files */"
+        }
+      }
+    },
+    "dependencies": [
+      "pug",
+      "stylus",
+      "marked",
+      "gray-matter"
+    ]
+  }
+} 
