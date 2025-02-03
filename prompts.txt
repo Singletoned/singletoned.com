@@ -1,0 +1,25 @@
+1. "Can you create a basic blog webpage for me that follows best practices, is simple and smart looking, and suitable for a professional geeky audience?"
+
+2. "Thanks! That looks really good. Can you convert the html to pugjs?"
+
+3. "What is the keyboard shortcut to commit this message?"
+
+4. "I'm using Cursor (obviously)"
+
+5. "I tried that and it doesn't work"
+
+6. "Can you convert styles.css to stylus please?"
+
+7. "Can you add a pug template that would be for each article?"
+
+8. "Thanks, is there a way to add metadata to markdown files?"
+
+9. "Can you make the front matter in example-post.md match the variables that you gave me earlier, please?"
+
+10. "Please write a script that renders each file in the posts folder using the article.pug template"
+
+11. "I get the error 'Error building posts: TypeError: marked is not a function' when I try to run the script"
+
+12. "Can you create a gitignore file with all the right entries in it for this project?"
+
+13. "Can you create a file called prompts.txt that summarises the prompts that I have given you in this session?" 
