@@ -22,4 +22,12 @@
 
 12. "Can you create a gitignore file with all the right entries in it for this project?"
 
-13. "Can you create a file called prompts.txt that summarises the prompts that I have given you in this session?" 
+13. "Can you create a file called prompts.txt that summarises the prompts that I have given you in this session?"
+
+14. "Actually, can you put the whole session in a json file, please?"
+
+15. "Could the json file please contain just my prompts and your full responses?"
+
+16. "Can I get something like this output myself from the editor? I'm using Cursor editor"
+
+17. "Can you update prompts.txt and session.json with the latest prompts from this chat and keep the format of those files the same?" 

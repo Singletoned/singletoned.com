@@ -106,6 +106,30 @@
           "files_created": ["session.json"],
           "description": "Created JSON summary of entire session"
         }
+      },
+      {
+        "prompt": "Could the json file please contain just my prompts and your full responses?",
+        "response": {
+          "files_updated": ["session.json"],
+          "description": "Started creating detailed JSON with full conversation"
+        }
+      },
+      {
+        "prompt": "Can I get something like this output myself from the editor? I'm using Cursor editor",
+        "response": {
+          "type": "information",
+          "content": "Explained Cursor's conversation export features"
+        }
+      },
+      {
+        "prompt": "Can you update prompts.txt and session.json with the latest prompts from this chat and keep the format of those files the same?",
+        "response": {
+          "files_updated": [
+            "prompts.txt",
+            "session.json"
+          ],
+          "description": "Updated both files with latest conversation"
+        }
       }
     ],
     "project_structure": {
