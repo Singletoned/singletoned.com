@@ -1,1 +1,40 @@
- 
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title Tech Insights Blog
+    link(rel="stylesheet" href="styles.css")
+    link(rel="preconnect" href="https://fonts.googleapis.com")
+    link(rel="preconnect" href="https://fonts.gstatic.com" crossorigin)
+    link(href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet")
+  
+  body
+    header
+      nav
+        .nav-brand Tech Insights
+        ul.nav-links
+          li: a.active(href="#") Home
+          li: a(href="#") Articles
+          li: a(href="#") About
+          li: a(href="#") Contact
+    
+    main
+      article.post
+        h1 Welcome to Tech Insights
+        .post-meta
+          time(datetime="2024-03-20") March 20, 2024
+          span.category Programming
+        p Welcome to my corner of the internet where we explore technology, programming, and software architecture.
+        a.read-more(href="#") Read more →
+      
+      article.post
+        h2 Understanding Modern Web Architecture
+        .post-meta
+          time(datetime="2024-03-19") March 19, 2024
+          span.category Architecture
+        p An exploration of contemporary web architecture patterns and their implications for modern applications.
+        a.read-more(href="#") Read more →
+    
+    footer
+      p &copy; 2024 Tech Insights. Built with ❤️ and code. 
