@@ -1,19 +1,25 @@
 ---
 title: Understanding Modern Web Architecture
-date: 2024-03-19
-dateFormatted: March 19, 2024
-category: Architecture
+dateISO: 2024-03-20
+dateFormatted: March 20, 2024
+category: Programming
 readingTime: 5
+featuredImage: /path/to/image.jpg
+featuredImageAlt: Image description
 author:
-  name: John Doe
-  bio: Full-stack developer and tech enthusiast
-  avatar: /images/john-doe.jpg
+  name: Author Name
+  bio: Short author bio
+  avatar: /path/to/avatar.jpg
 tags:
+  - JavaScript
   - Web Development
-  - Architecture
-  - Best Practices
-featuredImage: /images/web-architecture.jpg
-featuredImageAlt: Diagram showing modern web architecture
+  - Tutorial
+previousPost:
+  url: /previous-post
+  title: Previous Post Title
+nextPost:
+  url: /next-post
+  title: Next Post Title
 ---
 
 Your article content starts here...
