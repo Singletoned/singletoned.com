@@ -11,7 +11,7 @@ async function buildPosts() {
     await fs.mkdir(outputDir, { recursive: true });
 
     // Compile the Pug template
-    const templatePath = path.join(__dirname, '../article.pug');
+    const templatePath = path.join(__dirname, '../templates/article.pug');
     const renderTemplate = pug.compileFile(templatePath);
 
     // Get all markdown files from posts directory
