@@ -2,13 +2,16 @@ doctype html
 html(lang="en")
   head
     meta(charset="UTF-8")
-    meta(name="viewport" content="width=device-width, initial-scale=1.0")
-    title #{title} | Tech Insights
-    link(rel="stylesheet" href="/styles.css")
-    link(rel="preconnect" href="https://fonts.googleapis.com")
-    link(rel="preconnect" href="https://fonts.gstatic.com" crossorigin)
-    link(href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet")
-  
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title #{ title } | Tech Insights
+    link(rel="stylesheet", href="/styles.css")
+    link(rel="preconnect", href="https://fonts.googleapis.com")
+    link(rel="preconnect", href="https://fonts.gstatic.com", crossorigin)
+    link(
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=JetBrains+Mono:wght@400;700&display=swap",
+      rel="stylesheet"
+    )
+
   body
     header
       nav
@@ -18,46 +21,46 @@ html(lang="en")
           li: a(href="/articles") Articles
           li: a(href="/about") About
           li: a(href="/contact") Contact
-    
+
     main.article-page
       article.full-post
         header.article-header
-          h1 #{title}
+          h1 #{ title }
           .post-meta
-            time(datetime=dateISO) #{dateFormatted}
-            span.category #{category}
-            span.reading-time #{readingTime} min read
-        
+            time(datetime=dateISO) #{ dateFormatted }
+            span.category #{ category }
+            span.reading-time #{ readingTime } min read
+
         .article-content
           if featuredImage
-            img.featured-image(src=featuredImage alt=featuredImageAlt)
-          
+            img.featured-image(src=featuredImage, alt=featuredImageAlt)
+
           != content
-        
+
         footer.article-footer
           .author
-            img.author-avatar(src=author.avatar alt=author.name)
+            img.author-avatar(src=author.avatar, alt=author.name)
             .author-info
-              strong #{author.name}
-              p.author-bio #{author.bio}
-          
+              strong #{ author.name }
+              p.author-bio #{ author.bio }
+
           .article-tags
             each tag in tags
-              span.tag #{tag}
-        
+              span.tag #{ tag }
+
         section.article-nav
           if previousPost
             a.prev-post(href=previousPost.url)
               span ← Previous
-              span #{previousPost.title}
+              span #{ previousPost.title }
           if nextPost
             a.next-post(href=nextPost.url)
               span Next →
-              span #{nextPost.title}
-        
+              span #{ nextPost.title }
+
         section.comments
           h2 Discussion
           // Add your commenting system here
-    
+
     footer
-      p &copy; 2024 Tech Insights. Built with ❤️ and code. 
+      p &copy; 2024 Tech Insights. Built with ❤️ and code.

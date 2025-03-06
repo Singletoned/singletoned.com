@@ -2,13 +2,16 @@ doctype html
 html(lang="en")
   head
     meta(charset="UTF-8")
-    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
     title Tech Insights Blog
-    link(rel="stylesheet" href="styles.css")
-    link(rel="preconnect" href="https://fonts.googleapis.com")
-    link(rel="preconnect" href="https://fonts.gstatic.com" crossorigin)
-    link(href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet")
-  
+    link(rel="stylesheet", href="styles.css")
+    link(rel="preconnect", href="https://fonts.googleapis.com")
+    link(rel="preconnect", href="https://fonts.gstatic.com", crossorigin)
+    link(
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=JetBrains+Mono:wght@400;700&display=swap",
+      rel="stylesheet"
+    )
+
   body
     header
       nav
@@ -18,7 +21,7 @@ html(lang="en")
           li: a(href="#") Articles
           li: a(href="#") About
           li: a(href="#") Contact
-    
+
     main
       article.post
         h1 Welcome to Tech Insights
@@ -27,7 +30,7 @@ html(lang="en")
           span.category Programming
         p Welcome to my corner of the internet where we explore technology, programming, and software architecture.
         a.read-more(href="#") Read more →
-      
+
       article.post
         h2 Understanding Modern Web Architecture
         .post-meta
@@ -35,6 +38,6 @@ html(lang="en")
           span.category Architecture
         p An exploration of contemporary web architecture patterns and their implications for modern applications.
         a.read-more(href="#") Read more →
-    
+
     footer
-      p &copy; 2024 Tech Insights. Built with ❤️ and code. 
+      p &copy; 2024 Tech Insights. Built with ❤️ and code.
