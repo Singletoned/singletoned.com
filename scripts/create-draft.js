@@ -29,7 +29,7 @@ const fileName = `${date}-${kebabName}.md`;
 
 // Path to the example post and the drafts directory
 const rootDir = path.join(__dirname, '..');
-const examplePostPath = path.join(rootDir, 'content', 'posts', 'example-post.md');
+const examplePostPath = path.join(rootDir, 'drafts', 'example-post.md');
 const draftsDir = path.join(rootDir, 'content', 'drafts');
 
 // Create drafts directory if it doesn't exist
