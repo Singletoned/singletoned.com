@@ -11,6 +11,8 @@ async function buildPosts() {
     const outputDir = path.join(__dirname, "../dist/articles");
     await fs.mkdir(outputDir, { recursive: true });
 
+
+    
     // Compile the Pug template
     const templatePath = path.join(__dirname, "../templates/article.pug");
     const renderTemplate = pug.compileFile(templatePath);
@@ -48,7 +50,7 @@ async function buildPosts() {
       };
 
 
-      
+
       // Convert markdown content to HTML
       const htmlContent = marked(content);
 
