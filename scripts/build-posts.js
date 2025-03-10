@@ -35,6 +35,7 @@ async function buildPosts() {
       const authorId = frontmatter.author || 'default';
       const authorData = siteConfig.authors[authorId];
       
+
       // Create new frontmatter with author data and site config
       const mergedFrontmatter = {
         ...frontmatter,
