@@ -11,8 +11,6 @@ async function buildPosts() {
     const outputDir = path.join(__dirname, "../dist/articles");
     await fs.mkdir(outputDir, { recursive: true });
 
-
-    
     // Compile the Pug template
     const templatePath = path.join(__dirname, "../templates/article.pug");
     const renderTemplate = pug.compileFile(templatePath);
@@ -33,11 +31,6 @@ async function buildPosts() {
       const fileContent = await fs.readFile(filePath, "utf8");
       const { data: frontmatter, content } = matter(fileContent);
 
-
-
-
-
-
       // Merge author data from config
       const authorId = frontmatter.author || "default";
       const authorData = siteConfig.authors[authorId];
@@ -48,8 +41,6 @@ async function buildPosts() {
         author: authorData,
         site: siteConfig.site, // Make site config available to templates
       };
-
-
 
       // Convert markdown content to HTML
       const htmlContent = marked(content);

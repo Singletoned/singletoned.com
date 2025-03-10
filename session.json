@@ -6,10 +6,7 @@
       {
         "prompt": "Can you create a basic blog webpage for me that follows best practices, is simple and smart looking, and suitable for a professional geeky audience?",
         "response": {
-          "files_created": [
-            "index.html",
-            "styles.css"
-          ],
+          "files_created": ["index.html", "styles.css"],
           "description": "Created a clean, responsive blog template with modern styling"
         }
       },
@@ -51,10 +48,7 @@
       {
         "prompt": "Can you add a pug template that would be for each article?",
         "response": {
-          "files_created": [
-            "article.pug",
-            "styles.styl"
-          ],
+          "files_created": ["article.pug", "styles.styl"],
           "description": "Created article template and added article-specific styles"
         }
       },
@@ -124,10 +118,7 @@
       {
         "prompt": "Can you update prompts.txt and session.json with the latest prompts from this chat and keep the format of those files the same?",
         "response": {
-          "files_updated": [
-            "prompts.txt",
-            "session.json"
-          ],
+          "files_updated": ["prompts.txt", "session.json"],
           "description": "Updated both files with latest conversation"
         }
       }
@@ -150,11 +141,6 @@
         }
       }
     },
-    "dependencies": [
-      "pug",
-      "stylus",
-      "marked",
-      "gray-matter"
-    ]
+    "dependencies": ["pug", "stylus", "marked", "gray-matter"]
   }
-} 
+}

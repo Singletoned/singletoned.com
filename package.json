@@ -8,7 +8,9 @@
     "prepare": "husky install"
   },
   "lint-staged": {
-    "scripts/**/*.js": ["prettier --write"]
+    "scripts/**/*.js": [
+      "prettier --write"
+    ]
   },
   "devDependencies": {
     "gray-matter": "^4.0.3",
