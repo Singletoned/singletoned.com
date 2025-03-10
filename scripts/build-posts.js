@@ -3,6 +3,7 @@ const path = require('path');
 const matter = require('gray-matter');
 const pug = require('pug');
 const { marked } = require('marked');
+const yaml = require('js-yaml');
 
 async function buildPosts() {
   try {
@@ -19,6 +20,10 @@ async function buildPosts() {
     const files = await fs.readdir(postsDir);
     const markdownFiles = files.filter(file => file.endsWith('.md'));
 
+    // Load site configuration
+    const configPath = path.join(__dirname, '../config/site.yaml');
+    const siteConfig = yaml.load(await fs.readFile(configPath, 'utf8'));
+
     // Process each markdown file
     for (const file of markdownFiles) {
       // Read and parse the markdown file
@@ -26,13 +31,29 @@ async function buildPosts() {
       const fileContent = await fs.readFile(filePath, 'utf8');
       const { data: frontmatter, content } = matter(fileContent);
 
+      // Merge author data from config
+      const authorId = frontmatter.author || 'default';
+      const authorData = siteConfig.authors[authorId];
+      
+      // Create new frontmatter with author data and site config
+      const mergedFrontmatter = {
+        ...frontmatter,
+        author: authorData,
+        site: siteConfig.site // Make site config available to templates
+      };
+
       // Convert markdown content to HTML
       const htmlContent = marked(content);
 
+      // Calculate reading time
+      const wordCount = content.split(/\s+/).length;
+      const readingTime = Math.ceil(wordCount / 200);
+
       // Render the template with our data
       const html = renderTemplate({
-        ...frontmatter,
-        content: htmlContent
+        ...mergedFrontmatter,
+        content: htmlContent,
+        readingTime
       });
 
       // Create output filename (convert .md to .html)
