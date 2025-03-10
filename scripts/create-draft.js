@@ -53,20 +53,6 @@ try {
   
   console.log(`Created new draft: ${newDraftPath}`);
   
-  // Try to open the file in the default editor
-  try {
-    if (process.platform === 'darwin') {
-      execSync(`open "${newDraftPath}"`);
-    } else if (process.platform === 'win32') {
-      execSync(`start "" "${newDraftPath}"`);
-    } else {
-      execSync(`xdg-open "${newDraftPath}"`);
-    }
-    console.log('Opened the new draft in your default editor.');
-  } catch (error) {
-    console.log('Could not open the file automatically.');
-  }
-  
 } catch (error) {
   if (error.code === 'ENOENT' && !fs.existsSync(examplePostPath)) {
     console.error(`Example post not found at ${examplePostPath}`);
