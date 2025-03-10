@@ -1,11 +1,7 @@
 ---
-title: Understanding Modern Web Architecture
-dateISO: 2024-03-20
-dateFormatted: March 20, 2024
-category: Programming
-readingTime: 5
-featuredImage: /path/to/image.jpg
-featuredImageAlt: Image description
+title: First Post!
+dateISO: 2025-03-06
+category: Blather
 author:
   name: Author Name
   bio: Short author bio
