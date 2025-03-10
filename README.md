@@ -23,16 +23,27 @@
    ```
 
 ### Pre-commit Hooks
-This project uses Husky and lint-staged to automatically format JavaScript files in the `scripts` directory before committing. The formatting is done using Prettier according to the rules defined in `.prettierrc`.
 
-To manually format all files:
-```
-npm run format
-```
-or
-```
-yarn format
-```
+This project uses [pre-commit](https://pre-commit.com/) to run code quality checks before each commit.
+
+### Setup
+
+1. Install the development dependencies:
+   ```
+   pip install -r requirements-dev.txt
+   ```
+
+2. Install the pre-commit hooks:
+   ```
+   pre-commit install
+   ```
+
+3. (Optional) Run the hooks against all files:
+   ```
+   pre-commit run --all-files
+   ```
+
+The pre-commit hooks will now run automatically on each commit.
 
 ### Building the Site
 To build the site:
