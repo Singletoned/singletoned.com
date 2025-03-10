@@ -47,6 +47,8 @@ async function buildPosts() {
         site: siteConfig.site, // Make site config available to templates
       };
 
+
+      
       // Convert markdown content to HTML
       const htmlContent = marked(content);
 
