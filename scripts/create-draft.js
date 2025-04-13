@@ -24,8 +24,7 @@ if (!postName) {
 
 // Convert the post name to kebab-case for the filename
 const kebabName = toKebabCase(postName);
-const date = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
-const fileName = `${date}-${kebabName}.md`;
+const fileName = `${kebabName}.md`;
 
 // Path to the example post and the drafts directory
 const rootDir = path.join(__dirname, '..');
