@@ -29,7 +29,7 @@ const fileName = `${kebabName}.md`;
 // Path to the example post and the drafts directory
 const rootDir = path.join(__dirname, '..');
 const examplePostPath = path.join(rootDir, 'drafts', 'example-post.md');
-const draftsDir = path.join(rootDir, 'content', 'drafts');
+const draftsDir = path.join(rootDir, 'drafts');
 
 // Create drafts directory if it doesn't exist
 if (!fs.existsSync(draftsDir)) {
@@ -55,7 +55,7 @@ try {
 } catch (error) {
   if (error.code === 'ENOENT' && !fs.existsSync(examplePostPath)) {
     console.error(`Example post not found at ${examplePostPath}`);
-    console.error('Please make sure the example-post.md exists in the content/posts directory.');
+    console.error('Please make sure the example-post.md exists in the drafts directory.');
   } else {
     console.error('An error occurred:', error.message);
   }
