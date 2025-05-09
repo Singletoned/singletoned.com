@@ -21,7 +21,7 @@ async function buildPosts() {
     try {
       files = await fs.readdir(postsDir);
     } catch (err) {
-      if (err.code === 'ENOENT') {
+      if (err.code === "ENOENT") {
         console.log("Posts directory not found, creating it...");
         await fs.mkdir(postsDir, { recursive: true });
         files = [];
@@ -47,7 +47,7 @@ async function buildPosts() {
       const authorData = siteConfig.authors?.[authorId] || {
         name: "Unknown Author",
         avatar: "/images/default-avatar.png",
-        bio: ""
+        bio: "",
       };
 
       // Create new frontmatter with author data and site config
@@ -81,6 +81,43 @@ async function buildPosts() {
       console.log(`Built ${outputFile}`);
     }
 
+    // Build index page
+    const indexTemplatePath = path.join(__dirname, "../templates/index.pug");
+    const renderIndex = pug.compileFile(indexTemplatePath);
+    const indexPath = path.join(__dirname, "../dist/index.html");
+
+    // Prepare posts data for index page
+    const postsForIndex = [];
+    for (const file of markdownFiles) {
+      const filePath = path.join(postsDir, file);
+      const fileContent = await fs.readFile(filePath, "utf8");
+      const { data: frontmatter } = matter(fileContent);
+
+      const authorId = frontmatter.author || "default";
+      const authorData = siteConfig.authors?.[authorId] || {
+        name: "Unknown Author",
+        avatar: "/images/default-avatar.png",
+        bio: "",
+      };
+
+      postsForIndex.push({
+        ...frontmatter,
+        author: authorData,
+        slug: `articles/${file.replace(".md", ".html")}`,
+        date: frontmatter.date ? new Date(frontmatter.date) : new Date(),
+      });
+    }
+    postsForIndex.sort((a, b) => b.date - a.date); // Sort by date, newest first
+
+    await fs.writeFile(
+      indexPath,
+      renderIndex({
+        posts: postsForIndex,
+        site: siteConfig.site || {},
+      }),
+    );
+
+    console.log("Built index.html");
     console.log("All posts built successfully!");
   } catch (error) {
     console.error("Error building posts:", error);
