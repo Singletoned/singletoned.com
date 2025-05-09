@@ -5,11 +5,36 @@ const pug = require("pug");
 const { marked } = require("marked");
 const yaml = require("js-yaml");
 
+async function copyStaticFiles() {
+  const staticFiles = [
+    { src: path.join(__dirname, "../public/styles.css"), dest: path.join(__dirname, "../dist/styles.css") },
+    // Add other static files here as needed
+  ];
+
+  for (const file of staticFiles) {
+    try {
+      await fs.copyFile(file.src, file.dest);
+      console.log(`Copied ${path.basename(file.src)}`);
+    } catch (err) {
+      if (err.code === "ENOENT") {
+        console.log(`${path.basename(file.src)} not found - skipping`);
+      } else {
+        throw err;
+      }
+    }
+  }
+}
+
 async function buildPosts() {
   try {
-    // Create output directory if it doesn't exist
-    const outputDir = path.join(__dirname, "../dist/articles");
-    await fs.mkdir(outputDir, { recursive: true });
+    // Create output directories if they don't exist
+    const distDir = path.join(__dirname, "../dist");
+    const articlesDir = path.join(__dirname, "../dist/articles");
+    await fs.mkdir(distDir, { recursive: true });
+    await fs.mkdir(articlesDir, { recursive: true });
+
+    // Copy static files first
+    await copyStaticFiles();
 
     // Compile the Pug template
     const templatePath = path.join(__dirname, "../templates/article.pug");
@@ -73,7 +98,7 @@ async function buildPosts() {
 
       // Create output filename (convert .md to .html)
       const outputFile = file.replace(".md", ".html");
-      const outputPath = path.join(outputDir, outputFile);
+      const outputPath = path.join(articlesDir, outputFile);
 
       // Write the rendered HTML to file
       await fs.writeFile(outputPath, html);
@@ -103,7 +128,7 @@ async function buildPosts() {
       postsForIndex.push({
         ...frontmatter,
         author: authorData,
-        slug: `articles/${file.replace(".md", ".html")}`,
+        slug: file.replace(".md", ".html"),
         date: frontmatter.date ? new Date(frontmatter.date) : new Date(),
       });
     }
