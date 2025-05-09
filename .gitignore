@@ -42,3 +42,4 @@ debug.log
 *.swp
 *.swo
 *~ 
+.aider*
