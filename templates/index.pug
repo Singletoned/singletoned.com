@@ -23,21 +23,23 @@ html(lang="en")
           li: a(href="#") Contact
 
     main
-      article.post
-        h1 Welcome to Tech Insights
-        .post-meta
-          time(datetime="2024-03-20") March 20, 2024
-          span.category Programming
-        p Welcome to my corner of the internet where we explore technology, programming, and software architecture.
-        a.read-more(href="#") Read more →
-
-      article.post
-        h2 Understanding Modern Web Architecture
-        .post-meta
-          time(datetime="2024-03-19") March 19, 2024
-          span.category Architecture
-        p An exploration of contemporary web architecture patterns and their implications for modern applications.
-        a.read-more(href="#") Read more →
+      if posts && posts.length
+        each post in posts
+          article.post
+            h2
+              a(href=`/articles/${post.slug}`)= post.title
+            .post-meta
+              if post.date
+                time(datetime=post.date.toISOString())= post.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+              if post.category
+                span.category= post.category
+            if post.description
+              p= post.description
+            a.read-more(href=`/articles/${post.slug}`) Read more →
+      else
+        article.post
+          h1 Welcome to Tech Insights
+          p There are no posts yet. Check back soon!
 
     footer
       p &copy; 2024 Tech Insights. Built with ❤️ and code.
