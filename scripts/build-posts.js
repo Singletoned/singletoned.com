@@ -17,7 +17,18 @@ async function buildPosts() {
 
     // Get all markdown files from posts directory
     const postsDir = path.join(__dirname, "../posts");
-    const files = await fs.readdir(postsDir);
+    let files;
+    try {
+      files = await fs.readdir(postsDir);
+    } catch (err) {
+      if (err.code === 'ENOENT') {
+        console.log("Posts directory not found, creating it...");
+        await fs.mkdir(postsDir, { recursive: true });
+        files = [];
+      } else {
+        throw err;
+      }
+    }
     const markdownFiles = files.filter((file) => file.endsWith(".md"));
 
     // Load site configuration
@@ -31,15 +42,19 @@ async function buildPosts() {
       const fileContent = await fs.readFile(filePath, "utf8");
       const { data: frontmatter, content } = matter(fileContent);
 
-      // Merge author data from config
+      // Merge author data from config with fallback values
       const authorId = frontmatter.author || "default";
-      const authorData = siteConfig.authors[authorId];
+      const authorData = siteConfig.authors?.[authorId] || {
+        name: "Unknown Author",
+        avatar: "/images/default-avatar.png",
+        bio: ""
+      };
 
       // Create new frontmatter with author data and site config
       const mergedFrontmatter = {
         ...frontmatter,
         author: authorData,
-        site: siteConfig.site, // Make site config available to templates
+        site: siteConfig.site || {}, // Make site config available to templates
       };
 
       // Convert markdown content to HTML
