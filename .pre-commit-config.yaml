@@ -5,3 +5,5 @@ repos:
       - id: prettier
         additional_dependencies:
           - prettier@3.1.0
+        types: [file]
+        files: \.js
