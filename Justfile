@@ -6,3 +6,7 @@ build:
 serve:
     @echo "Serving website at http://localhost:8080"
     python3 -m http.server 8080 --directory dist
+
+# Test all links in the built site
+test-links:
+    bunx node scripts/test-links.js
