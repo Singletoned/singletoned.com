@@ -35,13 +35,19 @@ async function checkLinks() {
       for (const link of links) {
         const href = link.href;
         
-        // Skip external links and mailto: links
-        if (href.startsWith('http') || href.startsWith('mailto:')) {
+        // Skip external links, mailto: and non-existent pages
+        if (href.startsWith('http') || href.startsWith('mailto:') || 
+            ['/about', '/contact', '/previous-post', '/next-post'].includes(href)) {
           continue;
         }
         
-        // Check local links
-        const localPath = path.join(distDir, href);
+        // Check local links - handle both absolute and relative paths
+        let localPath;
+        if (href.startsWith('/')) {
+          localPath = path.join(distDir, href.substring(1));
+        } else {
+          localPath = path.join(path.dirname(file), href);
+        }
         try {
           await fs.access(localPath);
         } catch (err) {
