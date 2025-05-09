@@ -10,3 +10,7 @@ serve:
 # Test all links in the built site
 test-links:
     bunx node scripts/test-links.js
+
+# Format code using Prettier
+format:
+    bunx prettier --write 'scripts/**/*.js' 'templates/**/*.pug'

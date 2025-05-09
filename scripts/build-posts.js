@@ -7,7 +7,10 @@ const yaml = require("js-yaml");
 
 async function copyStaticFiles() {
   const staticFiles = [
-    { src: path.join(__dirname, "../public/styles.css"), dest: path.join(__dirname, "../dist/styles.css") },
+    {
+      src: path.join(__dirname, "../public/styles.css"),
+      dest: path.join(__dirname, "../dist/styles.css"),
+    },
     // Add other static files here as needed
   ];
 
