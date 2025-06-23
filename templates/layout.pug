@@ -1,0 +1,18 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title= title ? title + " | Simple Tech Blog" : "Simple Tech Blog"
+    link(rel="stylesheet" href="/style.css")
+  body
+    header
+      nav
+        a(href="/") Home
+        a(href="/about.html") About
+    
+    main
+      block content
+    
+    footer
+      p © 2024 Simple Tech Blog

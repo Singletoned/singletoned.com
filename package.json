@@ -1,0 +1,24 @@
+{
+  "name": "simple-tech-blog",
+  "version": "1.0.0",
+  "description": "A simple static site generator for tech blogging",
+  "main": "build.js",
+  "scripts": {
+    "build": "node build.js",
+    "dev": "node scripts/dev.js",
+    "publish": "node scripts/publish.js",
+    "new": "node scripts/new.js"
+  },
+  "dependencies": {
+    "markdown-it": "^14.0.0",
+    "pug": "^3.0.2",
+    "front-matter": "^4.0.2",
+    "reading-time": "^1.5.0",
+    "express": "^4.18.2",
+    "chokidar": "^3.5.3"
+  },
+  "devDependencies": {},
+  "keywords": ["blog", "static-site", "markdown", "pug"],
+  "author": "",
+  "license": "MIT"
+}

@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  h1 Latest Posts
+  
+  if posts && posts.length > 0
+    each post in posts
+      article.post-preview
+        h2
+          a(href=`/${post.slug}.html`)= post.title
+        p.meta
+          time(datetime=post.date)= new Date(post.date).toLocaleDateString()
+          span.reading-time= post.readingTime
+        if post.excerpt
+          p.excerpt= post.excerpt
+  else
+    p No posts yet. Create your first draft!
