@@ -1,23 +1,65 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Simple Tech Blog</title><link rel="stylesheet" href="/style.css"></head><body><header><nav><a href="/">Home</a><a href="/about.html">About</a></nav></header><main><article class="post"><header class="post-header"><h1>Getting Started with Static Site Generators</h1><p class="meta"><time datetime="2025-06-23T00:00:00.000Z">23/06/2025</time><span class="reading-time">2 min read</span></p></header><div class="post-content"><h1>Getting Started with Static Site Generators</h1>
-<p>Static site generators have become incredibly popular for tech blogs, and for good reason. They offer the perfect balance of simplicity, performance, and developer experience.</p>
-<h2>Why Choose a Static Site Generator?</h2>
-<p>There are several compelling reasons to use a static site generator for your tech blog:</p>
-<h3>Performance</h3>
-<p>Static sites load incredibly fast since they're just HTML, CSS, and JavaScript files served from a CDN. No database queries or server-side processing needed.</p>
-<h3>Security</h3>
-<p>With no server-side code or database, there's very little attack surface. Your site is essentially unhackable.</p>
-<h3>Version Control</h3>
-<p>Your entire site, including content, lives in version control. You can track changes, collaborate, and deploy with git.</p>
-<h3>Markdown Support</h3>
-<p>Write your posts in Markdown, which is perfect for technical content with code snippets and formatting.</p>
-<h2>Getting Started</h2>
-<p>The basic workflow is simple:</p>
-<ol>
-<li>Write your posts in Markdown</li>
-<li>Run a build command to generate static HTML</li>
-<li>Deploy the generated files to any web server</li>
-</ol>
-<pre><code class="language-bash"># Create a new draft
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Tech Blog</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <header>
+      <nav><a href="/">Home</a><a href="/about.html">About</a></nav>
+    </header>
+    <main>
+      <article class="post">
+        <header class="post-header">
+          <h1>Getting Started with Static Site Generators</h1>
+          <p class="meta">
+            <time datetime="2025-06-23T00:00:00.000Z">23/06/2025</time
+            ><span class="reading-time">2 min read</span>
+          </p>
+        </header>
+        <div class="post-content">
+          <h1>Getting Started with Static Site Generators</h1>
+          <p>
+            Static site generators have become incredibly popular for tech
+            blogs, and for good reason. They offer the perfect balance of
+            simplicity, performance, and developer experience.
+          </p>
+          <h2>Why Choose a Static Site Generator?</h2>
+          <p>
+            There are several compelling reasons to use a static site generator
+            for your tech blog:
+          </p>
+          <h3>Performance</h3>
+          <p>
+            Static sites load incredibly fast since they're just HTML, CSS, and
+            JavaScript files served from a CDN. No database queries or
+            server-side processing needed.
+          </p>
+          <h3>Security</h3>
+          <p>
+            With no server-side code or database, there's very little attack
+            surface. Your site is essentially unhackable.
+          </p>
+          <h3>Version Control</h3>
+          <p>
+            Your entire site, including content, lives in version control. You
+            can track changes, collaborate, and deploy with git.
+          </p>
+          <h3>Markdown Support</h3>
+          <p>
+            Write your posts in Markdown, which is perfect for technical content
+            with code snippets and formatting.
+          </p>
+          <h2>Getting Started</h2>
+          <p>The basic workflow is simple:</p>
+          <ol>
+            <li>Write your posts in Markdown</li>
+            <li>Run a build command to generate static HTML</li>
+            <li>Deploy the generated files to any web server</li>
+          </ol>
+          <pre><code class="language-bash"># Create a new draft
 npm run new &quot;My Amazing Post&quot;
 
 # Edit the draft in drafts/my-amazing-post.md
@@ -28,14 +70,20 @@ npm run publish my-amazing-post
 # Build the site
 npm run build
 </code></pre>
-<p>That's it! Your new post is live.</p>
-<h2>Next Steps</h2>
-<p>In future posts, I'll dive deeper into advanced topics like:</p>
-<ul>
-<li>Custom templates and styling</li>
-<li>SEO optimization</li>
-<li>Automated deployment</li>
-<li>Adding comments and analytics</li>
-</ul>
-<p>Happy blogging!</p>
-</div><nav class="post-nav"><a href="/">← Back to posts</a></nav></article></main><footer><p>© 2024 Simple Tech Blog</p></footer></body></html>
+          <p>That's it! Your new post is live.</p>
+          <h2>Next Steps</h2>
+          <p>In future posts, I'll dive deeper into advanced topics like:</p>
+          <ul>
+            <li>Custom templates and styling</li>
+            <li>SEO optimization</li>
+            <li>Automated deployment</li>
+            <li>Adding comments and analytics</li>
+          </ul>
+          <p>Happy blogging!</p>
+        </div>
+        <nav class="post-nav"><a href="/">← Back to posts</a></nav>
+      </article>
+    </main>
+    <footer><p>© 2024 Simple Tech Blog</p></footer>
+  </body>
+</html>

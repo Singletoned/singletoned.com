@@ -1,5 +1,5 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
 function createNewDraft(title) {
   if (!title) {
@@ -9,12 +9,13 @@ function createNewDraft(title) {
   }
 
   // Create a filename from the title
-  const filename = title
-    .toLowerCase()
-    .replace(/[^a-z0-9\s]/g, '')
-    .replace(/\s+/g, '-') + '.md';
+  const filename =
+    title
+      .toLowerCase()
+      .replace(/[^a-z0-9\s]/g, "")
+      .replace(/\s+/g, "-") + ".md";
 
-  const draftPath = path.join('./drafts', filename);
+  const draftPath = path.join("./drafts", filename);
 
   // Check if draft already exists
   if (fs.existsSync(draftPath)) {
@@ -33,8 +34,8 @@ excerpt: ""
 Write your article here...`;
 
   // Ensure drafts directory exists
-  if (!fs.existsSync('./drafts')) {
-    fs.mkdirSync('./drafts', { recursive: true });
+  if (!fs.existsSync("./drafts")) {
+    fs.mkdirSync("./drafts", { recursive: true });
   }
 
   // Write the draft
@@ -42,9 +43,11 @@ Write your article here...`;
 
   console.log(`Created new draft: ${filename}`);
   console.log(`Edit it in: drafts/${filename}`);
-  console.log(`When ready, publish with: npm run publish ${path.basename(filename, '.md')}`);
+  console.log(
+    `When ready, publish with: npm run publish ${path.basename(filename, ".md")}`,
+  );
 }
 
 // Get title from command line arguments
-const title = process.argv.slice(2).join(' ');
+const title = process.argv.slice(2).join(" ");
 createNewDraft(title);

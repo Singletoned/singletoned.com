@@ -14,11 +14,11 @@ dev:
 
 # Create a new draft article
 new title:
-    npm run new "{{title}}"
+    npm run new "{{ title }}"
 
 # Publish a draft article (moves from drafts/ to posts/ with metadata)
 publish filename:
-    npm run publish {{filename}}
+    npm run publish {{ filename }}
 
 # Clean generated files
 clean:

@@ -21,7 +21,12 @@
   "devDependencies": {
     "cheerio": "^1.0.0-rc.12"
   },
-  "keywords": ["blog", "static-site", "markdown", "pug"],
+  "keywords": [
+    "blog",
+    "static-site",
+    "markdown",
+    "pug"
+  ],
   "author": "",
   "license": "MIT"
 }
