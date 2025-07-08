@@ -28,9 +28,16 @@ clean:
 help:
     @just --list
 
+# Test internal links after building
+test: build
+    npm test
+
 # Build and serve locally (useful for testing)
 serve: build
     cd public && python3 -m http.server 8000
+
+# Build and test - useful before deployment
+check: build test
 
 # Default recipe
 default: help

@@ -7,7 +7,8 @@
     "build": "node build.js",
     "dev": "node scripts/dev.js",
     "publish": "node scripts/publish.js",
-    "new": "node scripts/new.js"
+    "new": "node scripts/new.js",
+    "test": "node tests/link-checker.js"
   },
   "dependencies": {
     "markdown-it": "^14.0.0",
@@ -17,7 +18,9 @@
     "express": "^4.18.2",
     "chokidar": "^3.5.3"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "cheerio": "^1.0.0-rc.12"
+  },
   "keywords": ["blog", "static-site", "markdown", "pug"],
   "author": "",
   "license": "MIT"
