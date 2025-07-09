@@ -1,6 +1,6 @@
-const fs = require("fs");
-const path = require("path");
-const cheerio = require("cheerio");
+import fs from "node:fs";
+import path from "node:path";
+import cheerio from "cheerio";
 
 class LinkChecker {
   constructor() {
@@ -15,7 +15,7 @@ class LinkChecker {
 
     if (!fs.existsSync(this.publicDir)) {
       console.error(
-        '❌ Public directory not found. Run "npm run build" first.',
+        '❌ Public directory not found. Run "deno task build" first.',
       );
       process.exit(1);
     }
@@ -185,9 +185,9 @@ class LinkChecker {
 }
 
 // Run the link checker
-if (require.main === module) {
+if (import.meta.main) {
   const checker = new LinkChecker();
   checker.checkLinks().catch(console.error);
 }
 
-module.exports = LinkChecker;
+export default LinkChecker;

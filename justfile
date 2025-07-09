@@ -1,24 +1,20 @@
 # Simple Tech Blog - Justfile
 
-# Install dependencies
-install:
-    npm install
-
 # Build the static site
 build:
-    npm run build
+    deno task build
 
 # Start development server with live reload
 dev:
-    npm run dev
+    deno task dev
 
 # Create a new draft article
 new title:
-    npm run new "{{ title }}"
+    deno task new "{{ title }}"
 
 # Publish a draft article (moves from drafts/ to posts/ with metadata)
 publish filename:
-    npm run publish {{ filename }}
+    deno task publish {{ filename }}
 
 # Clean generated files
 clean:
@@ -30,7 +26,7 @@ help:
 
 # Test internal links after building
 test: build
-    npm test
+    deno task test
 
 # Build and serve locally (useful for testing)
 serve: build
@@ -38,6 +34,14 @@ serve: build
 
 # Build and test - useful before deployment
 check: build test
+
+# Format code using Deno
+format:
+    deno fmt
+
+# Lint code using Deno
+lint:
+    deno lint
 
 # Default recipe
 default: help

@@ -1,9 +1,9 @@
-const fs = require("fs");
-const path = require("path");
-const pug = require("pug");
-const MarkdownIt = require("markdown-it");
-const fm = require("front-matter");
-const readingTime = require("reading-time");
+import fs from "node:fs";
+import path from "node:path";
+import pug from "pug";
+import MarkdownIt from "markdown-it";
+import fm from "front-matter";
+import readingTime from "reading-time";
 
 const md = new MarkdownIt();
 
@@ -126,9 +126,9 @@ class BlogBuilder {
 }
 
 // Run build if called directly
-if (require.main === module) {
+if (import.meta.main) {
   const builder = new BlogBuilder();
   builder.build().catch(console.error);
 }
 
-module.exports = BlogBuilder;
+export default BlogBuilder;

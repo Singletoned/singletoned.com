@@ -1,0 +1,35 @@
+{
+  "name": "simple-tech-blog",
+  "version": "1.0.0",
+  "description": "A simple static site generator for tech blogging",
+  "tasks": {
+    "build": "deno run --allow-read --allow-write --allow-env --allow-sys build.js",
+    "dev": "deno run --allow-read --allow-write --allow-net --allow-env --allow-sys scripts/dev.js",
+    "publish": "deno run --allow-read --allow-write --allow-env --allow-sys scripts/publish.js",
+    "new": "deno run --allow-read --allow-write --allow-env --allow-sys scripts/new.js",
+    "test": "deno run --allow-read --allow-write --allow-env --allow-sys tests/link-checker.js"
+  },
+  "imports": {
+    "markdown-it": "https://esm.sh/markdown-it@14.0.0",
+    "pug": "https://esm.sh/pug@3.0.2",
+    "front-matter": "https://esm.sh/front-matter@4.0.2",
+    "reading-time": "https://esm.sh/reading-time@1.5.0",
+    "express": "https://esm.sh/express@4.18.2",
+    "chokidar": "https://esm.sh/chokidar@3.5.3",
+    "cheerio": "https://esm.sh/cheerio@1.0.0-rc.12"
+  },
+  "compilerOptions": {
+    "allowJs": true,
+    "lib": ["dom", "dom.iterable", "es6"],
+    "noImplicitAny": false,
+    "strict": false
+  },
+  "fmt": {
+    "include": ["*.js", "scripts/", "tests/"],
+    "exclude": ["node_modules/", "public/"]
+  },
+  "lint": {
+    "include": ["*.js", "scripts/", "tests/"],
+    "exclude": ["node_modules/", "public/"]
+  }
+}

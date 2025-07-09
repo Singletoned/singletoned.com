@@ -1,7 +1,7 @@
-const express = require("express");
-const chokidar = require("chokidar");
-const path = require("path");
-const BlogBuilder = require("../build.js");
+import express from "express";
+import chokidar from "chokidar";
+import path from "node:path";
+import BlogBuilder from "../build.js";
 
 const app = express();
 const PORT = 3000;

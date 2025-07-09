@@ -1,10 +1,10 @@
-const fs = require("fs");
-const path = require("path");
+import fs from "node:fs";
+import path from "node:path";
 
 function createNewDraft(title) {
   if (!title) {
-    console.error('Usage: npm run new "<title>"');
-    console.error('Example: npm run new "My Amazing Article"');
+    console.error('Usage: deno task new "<title>"');
+    console.error('Example: deno task new "My Amazing Article"');
     process.exit(1);
   }
 
@@ -44,10 +44,10 @@ Write your article here...`;
   console.log(`Created new draft: ${filename}`);
   console.log(`Edit it in: drafts/${filename}`);
   console.log(
-    `When ready, publish with: npm run publish ${path.basename(filename, ".md")}`,
+    `When ready, publish with: deno task publish ${path.basename(filename, ".md")}`,
   );
 }
 
 // Get title from command line arguments
-const title = process.argv.slice(2).join(" ");
+const title = Deno.args.join(" ");
 createNewDraft(title);

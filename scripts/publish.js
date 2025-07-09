@@ -1,11 +1,11 @@
-const fs = require("fs");
-const path = require("path");
-const fm = require("front-matter");
+import fs from "node:fs";
+import path from "node:path";
+import fm from "front-matter";
 
 function publishDraft(filename) {
   if (!filename) {
-    console.error("Usage: npm run publish <filename>");
-    console.error("Example: npm run publish my-article");
+    console.error("Usage: deno task publish <filename>");
+    console.error("Example: deno task publish my-article");
     process.exit(1);
   }
 
@@ -52,5 +52,5 @@ ${parsed.body}`;
 }
 
 // Get filename from command line arguments
-const filename = process.argv[2];
+const filename = Deno.args[0];
 publishDraft(filename);
