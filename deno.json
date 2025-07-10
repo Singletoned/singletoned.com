@@ -7,7 +7,8 @@
     "dev": "deno run --allow-read --allow-write --allow-net --allow-env --allow-sys scripts/dev.js",
     "publish": "deno run --allow-read --allow-write --allow-env --allow-sys scripts/publish.js",
     "new": "deno run --allow-read --allow-write --allow-env --allow-sys scripts/new.js",
-    "test": "deno run --allow-read --allow-write --allow-env --allow-sys tests/link-checker.js"
+    "test": "deno run --allow-read --allow-write --allow-env --allow-sys tests/link-checker.js",
+    "add-image": "deno run --allow-read --allow-write --allow-net scripts/add-image.js"
   },
   "imports": {
     "markdown-it": "https://esm.sh/markdown-it@14.0.0",

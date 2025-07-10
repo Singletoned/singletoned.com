@@ -12,6 +12,10 @@ dev:
 new title:
     deno task new "{{ title }}"
 
+# Add an image to a draft post
+add-image post-name image-name url:
+    deno task add-image "{{ post-name }}" "{{ image-name }}" "{{ url }}"
+
 # Publish a draft article (moves from drafts/ to posts/ with metadata)
 publish filename:
     deno task publish {{ filename }}
