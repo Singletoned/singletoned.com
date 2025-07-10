@@ -159,6 +159,46 @@ p {
   color: #007acc;
 }
 
+/* Images */
+.post-content img,
+.page-content img {
+  max-width: 300px;
+  height: auto;
+  float: right;
+  margin: 0 0 1rem 1.5rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.post-content img:hover,
+.page-content img:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Ensure proper text flow around floated images */
+.post-content::after,
+.page-content::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive: stack images on smaller screens */
+@media (max-width: 600px) {
+  .post-content img,
+  .page-content img {
+    float: none;
+    display: block;
+    margin: 1rem auto;
+    max-width: 100%;
+  }
+}
+
 /* Footer */
 footer {
   margin-top: 3rem;

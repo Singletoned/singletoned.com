@@ -44,7 +44,10 @@ Write your article here...`;
   console.log(`Created new draft: ${filename}`);
   console.log(`Edit it in: drafts/${filename}`);
   console.log(
-    `When ready, publish with: deno task publish ${path.basename(filename, ".md")}`,
+    `When ready, publish with: deno task publish ${path.basename(
+      filename,
+      ".md",
+    )}`,
   );
 }
 
