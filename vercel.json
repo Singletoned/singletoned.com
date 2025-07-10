@@ -1,6 +1,6 @@
 {
   "buildCommand": "deno task build",
   "outputDirectory": "public",
-  "installCommand": "echo 'No install needed for Deno'",
+  "installCommand": "curl -fsSL https://deno.land/install.sh | sh && export PATH=\"$HOME/.deno/bin:$PATH\"",
   "devCommand": "deno task dev"
 }
