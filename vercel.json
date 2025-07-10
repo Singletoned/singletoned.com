@@ -1,0 +1,6 @@
+{
+  "buildCommand": "deno task build",
+  "outputDirectory": "public",
+  "installCommand": "echo 'No install needed for Deno'",
+  "devCommand": "deno task dev"
+}
