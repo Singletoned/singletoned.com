@@ -41,13 +41,31 @@ class BlogBuilder {
 
   copyStatic() {
     if (fs.existsSync(this.staticDir)) {
-      const files = fs.readdirSync(this.staticDir);
-      files.forEach((file) => {
-        const src = path.join(this.staticDir, file);
-        const dest = path.join(this.outputDir, file);
-        fs.copyFileSync(src, dest);
-      });
+      this.copyRecursive(this.staticDir, this.outputDir);
     }
+  }
+
+  copyRecursive(src, dest) {
+    const files = fs.readdirSync(src);
+    files.forEach((file) => {
+      const srcPath = path.join(src, file);
+      const destPath = path.join(dest, file);
+      const stat = fs.statSync(srcPath);
+
+      if (stat.isDirectory()) {
+        if (!fs.existsSync(destPath)) {
+          fs.mkdirSync(destPath, { recursive: true });
+        }
+        this.copyRecursive(srcPath, destPath);
+      } else {
+        // Ensure destination directory exists
+        const destDir = path.dirname(destPath);
+        if (!fs.existsSync(destDir)) {
+          fs.mkdirSync(destDir, { recursive: true });
+        }
+        fs.copyFileSync(srcPath, destPath);
+      }
+    });
   }
 
   async buildPosts() {
