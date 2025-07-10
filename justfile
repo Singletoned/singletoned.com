@@ -3,6 +3,7 @@
 # Build the static site
 build:
     deno task build
+    taidy .
 
 # Start development server with live reload
 dev:
