@@ -33,9 +33,9 @@ help:
 test: build
     deno task test
 
-# Build and serve locally (useful for testing)
-serve: build
-    cd public && python3 -m http.server 8000
+# Build and serve locally with file watching
+serve:
+    deno task dev
 
 # Build and test - useful before deployment
 check: build test
