@@ -12,6 +12,7 @@
   },
   "imports": {
     "markdown-it": "https://esm.sh/markdown-it@14.0.0",
+    "markdown-it-link-attributes": "https://esm.sh/markdown-it-link-attributes@4.0.1",
     "pug": "https://esm.sh/pug@3.0.2",
     "front-matter": "https://esm.sh/front-matter@4.0.2",
     "reading-time": "https://esm.sh/reading-time@1.5.0",

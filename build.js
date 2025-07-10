@@ -2,10 +2,18 @@ import fs from "node:fs";
 import path from "node:path";
 import pug from "pug";
 import MarkdownIt from "markdown-it";
+import linkAttributes from "markdown-it-link-attributes";
 import fm from "front-matter";
 import readingTime from "reading-time";
 
 const md = new MarkdownIt();
+md.use(linkAttributes, {
+  pattern: /^https?:\/\//,
+  attrs: {
+    target: "_blank",
+    rel: "noopener noreferrer",
+  },
+});
 
 class BlogBuilder {
   constructor() {
