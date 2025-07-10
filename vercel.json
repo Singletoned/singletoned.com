@@ -1,5 +1,5 @@
 {
-  "buildCommand": "deno task build",
+  "buildCommand": "/vercel/.deno/bin/deno task build",
   "outputDirectory": "public",
   "installCommand": "curl -fsSL https://deno.land/install.sh | sh && export PATH=\"$HOME/.deno/bin:$PATH\"",
   "devCommand": "deno task dev"
