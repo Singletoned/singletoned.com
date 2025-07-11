@@ -70,7 +70,7 @@ async function addImageToPost(postName, imageName, imageUrl) {
         .readdirSync("./drafts")
         .filter((f) => f.endsWith(".md"));
       drafts.forEach((draft) =>
-        console.error(`  - ${path.basename(draft, ".md")}`)
+        console.error(`  - ${path.basename(draft, ".md")}`),
       );
     }
     process.exit(1);
