@@ -2,6 +2,7 @@
 title: First Post!
 date: 2025-07-08
 excerpt: When I decided to create a website (mainly to show off what I've been building with AI), I had the irresistible desire to go "First Post", but I couldn't workout why.  I knew it was something from the past, but couldn't remember what.
+tags: [ai, nostalgia]
 ---
 
 When I decided to create a website (mainly to show off what I've been building with AI), I had the irresistible desire to go "First Post", but I couldn't workout why. I knew it was something from the past, but couldn't remember what.

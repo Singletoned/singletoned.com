@@ -104,6 +104,25 @@ p {
   content: " • ";
 }
 
+/* Tags */
+.tags {
+  margin: 0.5rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tag {
+  display: inline-block;
+  background: #f0f7ff;
+  color: #0066cc;
+  padding: 0.2rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border: 1px solid #cce7ff;
+}
+
 /* Post content */
 .post-content,
 .page-content {

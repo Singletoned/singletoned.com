@@ -2,6 +2,7 @@
 title: Oh Oh Deno
 date: 2025-07-10
 excerpt: Converting from npm to deno made me think of a song
+tags: [javascript, tools, nostalgia]
 ---
 
 ![A cassette tape of Geno by Dexy's Midnight Runners](oh-oh-Deno/geno-jpeg.jpeg)
