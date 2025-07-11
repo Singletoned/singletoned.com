@@ -9,11 +9,10 @@ function createNewDraft(title) {
   }
 
   // Create a filename from the title
-  const filename =
-    title
-      .toLowerCase()
-      .replace(/[^a-z0-9\s]/g, "")
-      .replace(/\s+/g, "-") + ".md";
+  const filename = title
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, "")
+    .replace(/\s+/g, "-") + ".md";
 
   const draftPath = path.join("./drafts", filename);
 
@@ -44,10 +43,12 @@ Write your article here...`;
   console.log(`Created new draft: ${filename}`);
   console.log(`Edit it in: drafts/${filename}`);
   console.log(
-    `When ready, publish with: deno task publish ${path.basename(
-      filename,
-      ".md",
-    )}`,
+    `When ready, publish with: deno task publish ${
+      path.basename(
+        filename,
+        ".md",
+      )
+    }`,
   );
 }
 
