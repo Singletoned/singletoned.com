@@ -62,18 +62,25 @@ class LinkChecker:
             return True
         return False
 
+    def resolve_path(self, url: str, from_page: str) -> str:
+        """Resolve a URL relative to the page it's on."""
+        url = url.split("#")[0]  # Remove fragment
+        if not url or url == "/":
+            return "index.html"
+        if url.startswith("/"):
+            return url.lstrip("/")
+        # Relative path - resolve from the page's directory
+        return str((Path(from_page).parent / url).as_posix())
+
     def check_link(self, href: str, from_page: str, link_text: str):
         if self.is_external(href):
             return
         if href.startswith("#"):
             return
 
-        target_path = href.lstrip("/").split("#")[0]
-        if not target_path:
-            target_path = "index.html"
+        target_path = self.resolve_path(href, from_page)
 
-        parsed = urlparse(target_path)
-        if not Path(parsed.path).suffix:
+        if not Path(target_path).suffix:
             target_path += ".html"
 
         full_path = self.public_dir / target_path
@@ -86,7 +93,7 @@ class LinkChecker:
         if self.is_external(src):
             return
 
-        target_path = src.lstrip("/")
+        target_path = self.resolve_path(src, from_page)
         full_path = self.public_dir / target_path
         if not full_path.exists():
             self.errors.append(f'Missing {asset_type} in {from_page}: "{src}" -> {target_path}')
