@@ -5,7 +5,7 @@ excerpt: Converting from npm to deno made me think of a song
 tags: [javascript, tools, nostalgia]
 ---
 
-![A cassette tape of Geno by Dexy's Midnight Runners](oh-oh-Deno/geno-jpeg.jpeg)
+![A cassette tape of Geno by Dexy's Midnight Runners](oh-oh-Deno/geno.jpeg)
 
 I got sick and tired of stupid `node_modules` folders in my repo. I also hate having virtualenvs in there, but I can put those wherever I want. But `node_modules` are apparently unmovable.
 

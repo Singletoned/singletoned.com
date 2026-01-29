@@ -3,6 +3,13 @@ dist/
 build/
 out/
 
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
 # Dependencies
 node_modules/
 package-lock.json

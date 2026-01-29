@@ -2,24 +2,19 @@
 
 # Build the static site
 build:
-    deno task build
-    -taidy .
+    python build.py
 
 # Start development server with live reload
 dev:
-    deno task dev
+    python scripts/dev.py
 
 # Create a new draft article
 new title:
-    deno task new "{{ title }}"
-
-# Add an image to a draft post
-add-image post-name image-name url:
-    deno task add-image "{{ post-name }}" "{{ image-name }}" "{{ url }}"
+    python scripts/new.py "{{ title }}"
 
 # Publish a draft article (moves from drafts/ to posts/ with metadata)
 publish filename:
-    deno task publish {{ filename }}
+    python scripts/publish.py {{ filename }}
 
 # Clean generated files
 clean:
@@ -31,22 +26,23 @@ help:
 
 # Test internal links after building
 test: build
-    deno task test
-
-# Build and serve locally with file watching
-serve:
-    deno task dev
+    python tests/link_checker.py
 
 # Build and test - useful before deployment
 check: build test
 
-# Format code using Deno
+# Format code using ruff
 format:
-    deno fmt
+    ruff format .
+    ruff check --fix .
 
-# Lint code using Deno
+# Lint code using ruff
 lint:
-    deno lint
+    ruff check .
+
+# Install dependencies
+install:
+    uv pip install -r requirements.txt
 
 # Default recipe
 default: help

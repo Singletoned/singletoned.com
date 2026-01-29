@@ -1,6 +1,6 @@
 {
-  "buildCommand": "/vercel/.deno/bin/deno task build",
+  "buildCommand": "pip install -r requirements.txt && python build.py",
   "outputDirectory": "public",
-  "installCommand": "curl -fsSL https://deno.land/install.sh | sh && export PATH=\"$HOME/.deno/bin:$PATH\"",
-  "devCommand": "deno task dev"
+  "installCommand": "pip install -r requirements.txt",
+  "devCommand": "python scripts/dev.py"
 }
