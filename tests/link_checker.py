@@ -67,6 +67,8 @@ class LinkChecker:
         url = url.split("#")[0]  # Remove fragment
         if not url or url == "/":
             return "index.html"
+        if url.endswith("/"):
+            url += "index.html"
         if url.startswith("/"):
             return url.lstrip("/")
         # Relative path - resolve from the page's directory
