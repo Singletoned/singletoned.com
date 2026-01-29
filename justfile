@@ -16,6 +16,10 @@ new title:
 publish filename:
     python scripts/publish.py {{ filename }}
 
+# Add an image to a draft post
+add-image post-name image-name url:
+    python scripts/add_image.py "{{ post-name }}" "{{ image-name }}" "{{ url }}"
+
 # Clean generated files
 clean:
     rm -rf public/*
