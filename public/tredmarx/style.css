@@ -83,6 +83,30 @@ main {
   margin-bottom: 2rem;
 }
 
+.screenshots {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin: 2rem 0;
+  padding: 0 1rem;
+}
+
+.screenshots img {
+  width: 180px;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 600px) {
+  .screenshots {
+    flex-wrap: wrap;
+  }
+  .screenshots img {
+    width: 140px;
+  }
+}
+
 .features {
   display: grid;
   gap: 1rem;
