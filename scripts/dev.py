@@ -65,6 +65,10 @@ class QuietHandler(http.server.SimpleHTTPRequestHandler):
         pass
 
 
+class ReusableTCPServer(socketserver.TCPServer):
+    allow_reuse_address = True
+
+
 def main():
     print("Starting development server...")
 
@@ -80,7 +84,7 @@ def main():
     observer.start()
 
     # Start HTTP server
-    with socketserver.TCPServer(("", PORT), QuietHandler) as httpd:
+    with ReusableTCPServer(("", PORT), QuietHandler) as httpd:
         print(f"Development server running at http://localhost:{PORT}")
         print("Watching for changes...")
         try:
