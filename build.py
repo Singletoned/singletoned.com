@@ -83,8 +83,8 @@ class BlogBuilder:
 
             posts.append(post_data)
 
-        # Sort by date, newest first
-        posts.sort(key=lambda p: p.get("date", ""), reverse=True)
+        # Sort by date, newest first (convert to string to handle mixed types)
+        posts.sort(key=lambda p: str(p.get("date", "")), reverse=True)
         return posts
 
     def build_pages(self):
