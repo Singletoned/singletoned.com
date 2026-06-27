@@ -3,3 +3,4 @@ markdown>=3.5
 python-frontmatter>=1.1
 livereload>=2.6
 beautifulsoup4>=4.12
+typer[all]>=0.9

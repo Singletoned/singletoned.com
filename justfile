@@ -1,52 +1,53 @@
 # Simple Tech Blog - Justfile
+# Thin wrapper around the blog CLI (for those who prefer just)
 
 # Build the static site
 build:
-    python build.py
+    blog build
 
 # Start development server with live reload
 dev:
-    python scripts/dev.py
+    blog dev
 
 # Create a new draft article
 new title:
-    python scripts/new.py "{{ title }}"
+    blog new "{{ title }}"
 
 # Publish a draft article (moves from drafts/ to posts/ with metadata)
 publish filename:
-    python scripts/publish.py {{ filename }}
+    blog publish {{ filename }}
 
 # Add an image to a draft post
 add-image post-name image-name url:
-    python scripts/add_image.py "{{ post-name }}" "{{ image-name }}" "{{ url }}"
+    blog add-image "{{ post-name }}" "{{ image-name }}" "{{ url }}"
 
 # Clean generated files
 clean:
-    rm -rf public/*
+    blog clean
 
 # Show available commands
 help:
     @just --list
 
 # Test internal links after building
-test: build
-    python tests/link_checker.py
+test:
+    blog test
 
 # Build and test - useful before deployment
-check: build test
+check:
+    blog check
 
 # Format code using ruff
 format:
-    ruff format .
-    ruff check --fix .
+    blog format
 
 # Lint code using ruff
 lint:
-    ruff check .
+    blog lint
 
 # Install dependencies
 install:
-    uv pip install -r requirements.txt
+    uv pip install -e .
 
 # Default recipe
 default: help
