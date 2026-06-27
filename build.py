@@ -3,11 +3,15 @@
 
 import re
 import shutil
+from datetime import date
 from pathlib import Path
 
 import frontmatter
 import markdown
 from jinja2 import Environment, FileSystemLoader
+
+SITE_TITLE = "Ed Singleton"
+SITE_URL = "https://singletoned.com"
 
 
 class BlogBuilder:
@@ -77,7 +81,13 @@ class BlogBuilder:
             }
 
             template = self.env.get_template("article.html")
-            html = template.render(post=post_data)
+            html = template.render(
+                post=post_data,
+                title=post_data.get("title"),
+                current_year=date.today().year,
+                site_title=SITE_TITLE,
+                site_url=SITE_URL,
+            )
             output_path = self.output_dir / f"{post_data['slug']}.html"
             output_path.write_text(html)
 
@@ -100,13 +110,24 @@ class BlogBuilder:
             }
 
             template = self.env.get_template("page.html")
-            html = template.render(page=page_data)
+            html = template.render(
+                page=page_data,
+                title=page_data.get("title"),
+                current_year=date.today().year,
+                site_title=SITE_TITLE,
+                site_url=SITE_URL,
+            )
             output_path = self.output_dir / f"{page_data['slug']}.html"
             output_path.write_text(html)
 
     def build_index(self, posts):
         template = self.env.get_template("index.html")
-        html = template.render(posts=posts)
+        html = template.render(
+            posts=posts,
+            current_year=date.today().year,
+            site_title=SITE_TITLE,
+            site_url=SITE_URL,
+        )
         output_path = self.output_dir / "index.html"
         output_path.write_text(html)
 

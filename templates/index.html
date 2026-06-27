@@ -1,32 +1,44 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<h1>Latest Posts</h1>
+<section class="hero">
+  <p class="eyebrow">Writing</p>
+  <h1>Recent posts</h1>
+</section>
 
 {% if posts %}
-  {% for post in posts %}
-  <article class="post-preview">
-    <a class="post-link" href="/{{ post.slug }}.html">
-      <h2>{{ post.title }}</h2>
-      <p class="meta">
-        <time datetime="{{ post.date }}">{{ post.date }}</time>
-        <span class="reading-time">{{ post.reading_time }}</span>
-      </p>
-      {% if post.tags %}
-      <div class="tags">
-        {% for tag in post.tags %}
-        <span class="tag">#{{ tag }}</span>
-        {% endfor %}
-      </div>
-      {% endif %}
-      {% if post.excerpt %}
-      <p class="excerpt">{{ post.excerpt }}</p>
-      {% endif %}
-      <p class="read-more">Read more &rarr;</p>
-    </a>
-  </article>
-  {% endfor %}
+<section aria-label="Recent posts">
+  <ol class="post-list" reversed>
+    {% for post in posts %}
+    <li>
+      <article class="post-preview">
+        <a class="post-link" href="/{{ post.slug }}.html">
+          <p class="meta">
+            <time datetime="{{ post.date }}">{{ post.date }}</time>
+            <span class="reading-time">{{ post.reading_time }}</span>
+          </p>
+          <h2>{{ post.title }}</h2>
+          {% if post.tags %}
+          <div class="tags" aria-label="Tags">
+            {% for tag in post.tags %}
+            <span class="tag">#{{ tag }}</span>
+            {% endfor %}
+          </div>
+          {% endif %}
+          {% if post.excerpt %}
+          <p class="excerpt">{{ post.excerpt }}</p>
+          {% endif %}
+          <p class="read-more">Read post <span aria-hidden="true">&rarr;</span></p>
+        </a>
+      </article>
+    </li>
+    {% endfor %}
+  </ol>
+</section>
 {% else %}
-  <p>No posts yet. Create your first draft!</p>
+<section class="empty-state">
+  <h2>No posts yet</h2>
+  <p>Create the first draft when you are ready.</p>
+</section>
 {% endif %}
 {% endblock %}

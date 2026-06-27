@@ -3,24 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% if title %}{{ title }} | Ed Singleton's Blog{% else %}Ed Singleton's Blog{% endif %}</title>
+  <title>{% if title %}{{ title }} | {{ site_title }}{% else %}{{ site_title }}{% endif %}</title>
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-  <header>
-    <nav>
-      <a href="/">Home</a>
-      <a href="/about.html">About</a>
-      <a href="/tredmarx/">TredMarx</a>
-    </nav>
-  </header>
+  <a class="skip-link" href="#main-content">Skip to content</a>
 
-  <main>
-    {% block content %}{% endblock %}
-  </main>
+  <div class="site-shell">
+    <header class="site-header">
+      <div class="site-header__inner">
+        <div class="site-branding">
+          <p class="site-kicker">singletoned.com</p>
+          <a class="site-title" href="/">{{ site_title }}</a>
+        </div>
 
-  <footer>
-    <p>&copy; 2025 Ed Singleton</p>
-  </footer>
+        <nav class="site-nav" aria-label="Primary">
+          <a href="/">Writing</a>
+          <a href="/about.html">About</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main-content" class="site-main">
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+      <div>
+        <p>&copy; {{ current_year }} {{ site_title }}</p>
+      </div>
+      <div class="site-footer__links">
+        <a href="/tredmarx/">TredMarx app pages</a>
+      </div>
+    </footer>
+  </div>
 </body>
 </html>

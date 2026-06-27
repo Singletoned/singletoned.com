@@ -2,21 +2,16 @@
 title: About
 ---
 
-# About This Blog
+<div class="ai-generated" data-authorship="ai" aria-label="AI-generated content">
+<p class="ai-generated__label">AI-generated content</p>
 
-Welcome to my tech blog! This is where I share my thoughts, experiences, and learnings about technology, programming, and software development.
+<p>This page was rewritten by AI during a site redesign and is intentionally marked so it does not read as human-authored writing.</p>
 
-## About the Site
+<p>This site is a static website for Ed Singleton. It is used for writing, sharing projects, and publishing occasional app-related pages when required.</p>
 
-This blog is built with a custom static site generator using:
-
-- **Markdown** for writing articles
-- **Pug.js** for templating
-- **Node.js** for the build system
-- Minimal, semantic CSS for styling
-
-The source code is simple and lightweight, focusing on content over complexity.
+<p>The current version is built with Python, Markdown, Jinja templates, and a small custom stylesheet. The site aims to stay simple, semantic, accessible, and easy to maintain.</p>
+</div>
 
 ## Contact
 
-Feel free to reach out if you have any questions or want to discuss any of the topics covered here.
+For now, the best route is the contact information already associated with the domain.
