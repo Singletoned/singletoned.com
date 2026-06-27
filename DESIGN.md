@@ -14,7 +14,8 @@ It is also a test bed for a design style built around clear signifiers and obvio
 
 2. **Strong signifiers**
    - Links should look like links.
-   - Controls should look pressable/clickable.
+   - Buttons should look like buttons.
+   - Controls should look pressable/clickable only when they actually perform an action.
    - State changes should be obvious.
 
 3. **Preserve traditional expectations**
@@ -37,8 +38,10 @@ It is also a test bed for a design style built around clear signifiers and obvio
 
 ## Interaction Rules
 
+- Links go somewhere and should read as links.
+- Buttons do something and should read as buttons.
+- Do not style ordinary navigation links as faux buttons unless they genuinely behave like controls.
 - Body links remain underlined by default.
-- Primary navigation links should look like controls, not plain text.
 - Hover, focus, and active states must all be visible.
 - Keyboard focus must remain obvious.
 - Interactive styling should increase clarity, not novelty.
