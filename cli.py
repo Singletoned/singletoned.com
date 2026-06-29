@@ -1,26 +1,109 @@
 #!/usr/bin/env python3
-"""Blog CLI with shell completion for draft names."""
+"""Blog CLI with shell completion for draft and idea names."""
 
 import re
 import shutil
 import subprocess
 import sys
 import urllib.request
-from datetime import date
+from datetime import date, datetime
 from pathlib import Path
 
 import frontmatter
 import typer
 
+DRAFTS_DIR = Path("drafts")
+IDEAS_DIR = Path("ideas")
+TEST_PATTERN = "test_*.py"
+
 app = typer.Typer(help="Blog management CLI")
+
+
+def _list_markdown_stems(directory: Path) -> list[str]:
+    if not directory.exists():
+        return []
+    return sorted(file.stem for file in directory.glob("*.md"))
+
+
+def _slugify(value: str) -> str:
+    result = re.sub(r"[^a-z0-9\s-]", "", value.lower())
+    result = re.sub(r"\s+", "-", result)
+    result = re.sub(r"-+", "-", result)
+    return result.strip("-")
+
+
+def _draft_path(name: str) -> Path:
+    filename = name if name.endswith(".md") else f"{name}.md"
+    return DRAFTS_DIR / filename
+
+
+def _idea_path(name: str) -> Path:
+    filename = name if name.endswith(".md") else f"{name}.md"
+    return IDEAS_DIR / filename
+
+
+def _draft_template(title: str, idea_source: str | None = None, notes: str = "") -> str:
+    source_line = f'idea: "{idea_source}"\n' if idea_source else ""
+    notes_block = f"\n## Notes from idea\n\n{notes.strip()}\n" if notes.strip() else ""
+    return f"""---
+title: {title}
+excerpt: ""
+{source_line}---
+
+# {title}
+{notes_block}
+Write your article here...
+"""
+
+
+def _idea_notes_for_draft(title: str, content: str) -> str:
+    lines = content.strip().splitlines()
+    heading = f"# {title}"
+    if lines and lines[0].strip() == heading:
+        lines = lines[1:]
+        while lines and not lines[0].strip():
+            lines = lines[1:]
+    return "\n".join(lines).strip()
+
+
+def _idea_template(title: str, created_at: str) -> str:
+    return f"""---
+title: {title}
+created: {created_at}
+status: inbox
+---
+
+# {title}
+
+## Spark
+
+## Notes
+
+## Possible directions
+
+## Next step
+"""
+
+
+def _load_idea(idea_name: str):
+    idea_path = _idea_path(idea_name)
+    if not idea_path.exists():
+        print(f"Idea not found: {idea_path}")
+        print("Available ideas:")
+        for idea in _list_markdown_stems(IDEAS_DIR):
+            print(f"  - {idea}")
+        raise typer.Exit(1)
+    return idea_path, frontmatter.load(idea_path)
 
 
 def complete_drafts() -> list[str]:
     """Return list of draft names for completion."""
-    drafts_dir = Path("drafts")
-    if not drafts_dir.exists():
-        return []
-    return [f.stem for f in drafts_dir.glob("*.md")]
+    return _list_markdown_stems(DRAFTS_DIR)
+
+
+def complete_ideas() -> list[str]:
+    """Return list of idea names for completion."""
+    return _list_markdown_stems(IDEAS_DIR)
 
 
 @app.command()
@@ -35,42 +118,89 @@ def build():
 @app.command()
 def dev():
     """Start development server with live reload."""
-    subprocess.run([sys.executable, "scripts/dev.py"])
+    subprocess.run([sys.executable, "scripts/dev.py"], check=True)
 
 
 @app.command()
 def new(title: str = typer.Argument(..., help="Title for the new draft")):
     """Create a new draft article."""
-    if not title:
+    slug = _slugify(title)
+    if not slug:
         print('Usage: blog new "<title>"')
         raise typer.Exit(1)
 
-    # Create filename from title
-    filename = re.sub(r"[^a-z0-9\s]", "", title.lower())
-    filename = re.sub(r"\s+", "-", filename) + ".md"
-
-    drafts_dir = Path("drafts")
-    draft_path = drafts_dir / filename
-
+    draft_path = _draft_path(slug)
     if draft_path.exists():
-        print(f"Draft already exists: {filename}")
+        print(f"Draft already exists: {draft_path.name}")
         raise typer.Exit(1)
 
-    content = f"""---
-title: {title}
-excerpt: ""
----
+    DRAFTS_DIR.mkdir(exist_ok=True)
+    draft_path.write_text(_draft_template(title))
 
-# {title}
-
-Write your article here..."""
-
-    drafts_dir.mkdir(exist_ok=True)
-    draft_path.write_text(content)
-
-    print(f"Created new draft: {filename}")
-    print(f"Edit it in: drafts/{filename}")
+    print(f"Created new draft: {draft_path.name}")
+    print(f"Edit it in: {draft_path}")
     print(f"When ready, publish with: blog publish {draft_path.stem}")
+
+
+@app.command()
+def idea(title: str = typer.Argument(..., help="Short title for the idea")):
+    """Capture a new idea in the inbox."""
+    slug = _slugify(title)
+    if not slug:
+        print('Usage: blog idea "<title>"')
+        raise typer.Exit(1)
+
+    created_at = datetime.now().replace(microsecond=0).isoformat()
+    filename = f"{created_at[:10]}-{slug}.md"
+    idea_path = _idea_path(filename)
+
+    if idea_path.exists():
+        print(f"Idea already exists: {idea_path.name}")
+        raise typer.Exit(1)
+
+    IDEAS_DIR.mkdir(exist_ok=True)
+    idea_path.write_text(_idea_template(title, created_at))
+
+    print(f"Captured idea: {idea_path.name}")
+    print(f"Edit it in: {idea_path}")
+    print("When it deserves a draft, run: blog draft-from-idea <idea-name>")
+
+
+@app.command()
+def ideas():
+    """List captured ideas."""
+    names = _list_markdown_stems(IDEAS_DIR)
+    if not names:
+        print("No ideas captured yet.")
+        return
+
+    print("Ideas:")
+    for name in names:
+        print(f"  - {name}")
+
+
+@app.command("draft-from-idea")
+def draft_from_idea(
+    idea_name: str = typer.Argument(..., help="Idea name", autocompletion=complete_ideas),
+):
+    """Create a draft from an existing idea note."""
+    idea_path, idea_post = _load_idea(idea_name)
+    title = idea_post.metadata.get("title") or idea_path.stem.replace("-", " ").title()
+    draft_slug = _slugify(title)
+    draft_path = _draft_path(draft_slug)
+
+    if draft_path.exists():
+        print(f"Draft already exists: {draft_path.name}")
+        raise typer.Exit(1)
+
+    DRAFTS_DIR.mkdir(exist_ok=True)
+    idea_reference = idea_path.relative_to(IDEAS_DIR.parent).as_posix()
+    idea_notes = _idea_notes_for_draft(title, idea_post.content)
+    draft_path.write_text(_draft_template(title, idea_reference, idea_notes))
+
+    print(f"Created draft: {draft_path.name}")
+    print(f"Source idea: {idea_path}")
+    print(f"Edit it in: {draft_path}")
 
 
 @app.command()
@@ -78,44 +208,32 @@ def publish(
     draft: str = typer.Argument(..., help="Draft name to publish", autocompletion=complete_drafts),
 ):
     """Publish a draft article (moves from drafts/ to posts/ with metadata)."""
-    filename = draft
-    if not filename.endswith(".md"):
-        filename += ".md"
-
-    draft_path = Path("drafts") / filename
-    post_path = Path("posts") / filename
+    draft_path = _draft_path(draft)
+    post_path = Path("posts") / draft_path.name
 
     if not draft_path.exists():
         print(f"Draft not found: {draft_path}")
         print("Available drafts:")
-        drafts_dir = Path("drafts")
-        if drafts_dir.exists():
-            for d in drafts_dir.glob("*.md"):
-                print(f"  - {d.stem}")
+        for name in _list_markdown_stems(DRAFTS_DIR):
+            print(f"  - {name}")
         raise typer.Exit(1)
 
     post = frontmatter.load(draft_path)
 
-    # Set publication date if not present
     if "date" not in post.metadata:
         post.metadata["date"] = date.today().isoformat()
-
-    # Ensure title exists
     if "title" not in post.metadata:
         post.metadata["title"] = draft_path.stem.replace("-", " ").title()
-
-    # Ensure excerpt exists
     if "excerpt" not in post.metadata:
         post.metadata["excerpt"] = ""
 
-    # Write to posts directory
     post_path.parent.mkdir(exist_ok=True)
-    with open(post_path, "wb") as f:
-        frontmatter.dump(post, f)
+    with open(post_path, "wb") as file_handle:
+        frontmatter.dump(post, file_handle)
 
     draft_path.unlink()
 
-    print(f"Published: {filename}")
+    print(f"Published: {draft_path.name}")
     print("Moved from drafts/ to posts/")
     print(f"Added publication date: {post.metadata['date']}")
 
@@ -146,33 +264,27 @@ def add_image(
     source: str = typer.Argument(..., help="URL or local path to image"),
 ):
     """Add an image to a draft post from a URL or local file."""
-    # Find the draft file
-    draft_path = Path("drafts") / f"{draft}.md"
+    draft_path = _draft_path(draft)
     if not draft_path.exists():
         print(f"Draft not found: {draft_path}")
         print("Available drafts:")
-        drafts_dir = Path("drafts")
-        if drafts_dir.exists():
-            for d in drafts_dir.glob("*.md"):
-                print(f"  - {d.stem}")
+        for draft_name in _list_markdown_stems(DRAFTS_DIR):
+            print(f"  - {draft_name}")
         raise typer.Exit(1)
 
-    # Create image directory for this post
-    image_dir = Path("static") / draft
+    image_dir = Path("static") / draft_path.stem
     image_dir.mkdir(parents=True, exist_ok=True)
 
-    # Get file extension and destination path
     ext = _get_image_extension(source)
     sanitized_name = _sanitize_filename(name)
     image_path = image_dir / f"{sanitized_name}{ext}"
 
-    # Copy or download the image
     if _is_url(source):
         print(f"Downloading image from: {source}")
         try:
             urllib.request.urlretrieve(source, image_path)
-        except Exception as e:
-            print(f"Failed to download image: {e}")
+        except Exception as error:
+            print(f"Failed to download image: {error}")
             raise typer.Exit(1)
     else:
         source_path = Path(source).expanduser()
@@ -182,14 +294,9 @@ def add_image(
         print(f"Copying image from: {source_path}")
         shutil.copy2(source_path, image_path)
 
-    # Read the draft content
     content = draft_path.read_text()
-
-    # Create markdown link
-    relative_image_path = f"{draft}/{sanitized_name}{ext}"
+    relative_image_path = f"{draft_path.stem}/{sanitized_name}{ext}"
     markdown_link = f"![{name}]({relative_image_path})"
-
-    # Add the image link to the end of the content
     updated_content = content.strip() + "\n\n" + markdown_link + "\n"
     draft_path.write_text(updated_content)
 
@@ -216,7 +323,11 @@ def clean():
 
 @app.command()
 def test():
-    """Test internal links after building."""
+    """Run unit tests and check internal links after building."""
+    subprocess.run(
+        [sys.executable, "-m", "unittest", "discover", "-s", "tests", "-p", TEST_PATTERN],
+        check=True,
+    )
     build()
     subprocess.run([sys.executable, "tests/link_checker.py"], check=True)
 
@@ -230,14 +341,14 @@ def check():
 @app.command()
 def format():
     """Format code using ruff."""
-    subprocess.run(["ruff", "format", "."])
-    subprocess.run(["ruff", "check", "--fix", "."])
+    subprocess.run(["ruff", "format", "."], check=True)
+    subprocess.run(["ruff", "check", "--fix", "."], check=True)
 
 
 @app.command()
 def lint():
     """Lint code using ruff."""
-    subprocess.run(["ruff", "check", "."])
+    subprocess.run(["ruff", "check", "."], check=True)
 
 
 @app.command()

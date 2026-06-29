@@ -24,7 +24,7 @@ Phase 1 focuses on:
 - removing `posts/cloudflare-is-surprisingly-bad.md` from the live site
 - documenting the project and design principles clearly
 
-Selected projects, writing-workflow improvements, richer image handling, and browser/mobile automation are later phases.
+Selected projects, richer image handling, and browser/mobile automation are later phases.
 
 ## Product Intent
 
@@ -70,9 +70,14 @@ The goal is not novelty. The goal is clarity.
 
 ## Workflow Direction
 
-Writing workflow matters, but not in phase 1.
+Writing workflow should reduce the friction of getting from an idea to a draft.
 
-The first workflow improvement after the redesign should reduce the friction of getting from an idea to a draft, likely via a lightweight inbox/capture model stored in the repo as Markdown.
+The current direction is:
+
+- capture rough ideas as Markdown notes in `ideas/`
+- promote good ideas into `drafts/` with a CLI command
+- keep the workflow filesystem-based and Emacs-friendly
+- add tooling only where it reduces real friction
 
 ## Success Criteria
 
