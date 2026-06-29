@@ -41,7 +41,8 @@ It is also a test bed for a design style built around clear signifiers and obvio
 - Links go somewhere and should read as links.
 - Buttons do something and should read as buttons.
 - Do not style ordinary navigation links as faux buttons unless they genuinely behave like controls.
-- Body links remain underlined by default.
+- Links should be blue and underlined unless there is a clear reason not to.
+- Exceptions should be rare and deliberate, for example a linked card or the site wordmark.
 - Hover, focus, and active states must all be visible.
 - Keyboard focus must remain obvious.
 - Interactive styling should increase clarity, not novelty.
