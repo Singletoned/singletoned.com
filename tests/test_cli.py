@@ -26,6 +26,17 @@ class CliHelpersTest(unittest.TestCase):
         self.assertIn("status: inbox", content)
         self.assertIn("## Spark", content)
 
+    def test_find_matching_idea_paths_matches_slug_suffix(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            ideas_dir = Path(temp_dir)
+            idea_path = ideas_dir / "2026-06-27-second-post.md"
+            idea_path.write_text("placeholder")
+
+            with mock.patch.object(cli, "IDEAS_DIR", ideas_dir):
+                matches = cli._find_matching_idea_paths("Second Post")
+
+            self.assertEqual(matches, [idea_path])
+
     def test_idea_notes_for_draft_drops_duplicate_title_heading(self):
         content = "# Test Idea\n\n## Notes\n\nA strong opening thought.\n"
         self.assertEqual(
@@ -34,6 +45,19 @@ class CliHelpersTest(unittest.TestCase):
 
 
 class CliWorkflowTest(unittest.TestCase):
+    def test_idea_command_prints_exact_follow_up_command(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            ideas_dir = root / "ideas"
+            output = io.StringIO()
+
+            with redirect_stdout(output):
+                with mock.patch.object(cli, "IDEAS_DIR", ideas_dir):
+                    cli.idea("Second Post")
+
+            self.assertIn("blog draft-from-idea 2026-", output.getvalue())
+            self.assertIn('blog draft-from-idea "Second Post"', output.getvalue())
+
     def test_draft_from_idea_creates_draft_with_source_reference(self):
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)

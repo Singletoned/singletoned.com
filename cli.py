@@ -85,15 +85,42 @@ status: inbox
 """
 
 
+def _find_matching_idea_paths(idea_name: str) -> list[Path]:
+    direct_path = _idea_path(idea_name)
+    if direct_path.exists():
+        return [direct_path]
+
+    slug = _slugify(idea_name)
+    if not slug or not IDEAS_DIR.exists():
+        return []
+
+    matches = []
+    for path in sorted(IDEAS_DIR.glob("*.md")):
+        stem = path.stem
+        if stem == slug or stem.endswith(f"-{slug}"):
+            matches.append(path)
+    return matches
+
+
 def _load_idea(idea_name: str):
-    idea_path = _idea_path(idea_name)
-    if not idea_path.exists():
-        print(f"Idea not found: {idea_path}")
-        print("Available ideas:")
-        for idea in _list_markdown_stems(IDEAS_DIR):
-            print(f"  - {idea}")
+    matches = _find_matching_idea_paths(idea_name)
+    if len(matches) == 1:
+        idea_path = matches[0]
+        return idea_path, frontmatter.load(idea_path)
+
+    if len(matches) > 1:
+        print(f"Idea name is ambiguous: {idea_name}")
+        print("Matching ideas:")
+        for match in matches:
+            print(f"  - {match.stem}")
+        print("Use the full idea name shown above.")
         raise typer.Exit(1)
-    return idea_path, frontmatter.load(idea_path)
+
+    print(f'Idea not found for input: "{idea_name}"')
+    print("Available ideas:")
+    for idea in _list_markdown_stems(IDEAS_DIR):
+        print(f"  - {idea}")
+    raise typer.Exit(1)
 
 
 def complete_drafts() -> list[str]:
@@ -163,7 +190,8 @@ def idea(title: str = typer.Argument(..., help="Short title for the idea")):
 
     print(f"Captured idea: {idea_path.name}")
     print(f"Edit it in: {idea_path}")
-    print("When it deserves a draft, run: blog draft-from-idea <idea-name>")
+    print(f"When it deserves a draft, run: blog draft-from-idea {idea_path.stem}")
+    print(f'Or use the title if it is unique: blog draft-from-idea "{title}"')
 
 
 @app.command()
