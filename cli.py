@@ -99,6 +99,29 @@ status: inbox
 """
 
 
+def _strip_markdown_links(text: str) -> str:
+    return re.sub(r"\[([^\]]+)\]\([^\)]+\)", r"\1", text)
+
+
+def _first_sentence(text: str) -> str:
+    match = re.search(r"(.+?[.!?])(?:\s|$)", text.strip(), re.DOTALL)
+    if match:
+        return match.group(1).strip()
+    return text.strip()
+
+
+def _derive_excerpt(content: str) -> str:
+    for block in content.split("\n\n"):
+        stripped = block.strip()
+        if not stripped or stripped.startswith("#") or stripped.startswith("<"):
+            continue
+        excerpt = _strip_markdown_links(stripped)
+        excerpt = re.sub(r"`([^`]+)`", r"\1", excerpt)
+        excerpt = re.sub(r"\s+", " ", excerpt)
+        return _first_sentence(excerpt)
+    return ""
+
+
 def _find_matching_idea_paths(idea_name: str) -> list[Path]:
     direct_path = _idea_path(idea_name)
     if direct_path.exists():
@@ -330,8 +353,8 @@ def publish(
         post.metadata["date"] = date.today().isoformat()
     if "title" not in post.metadata:
         post.metadata["title"] = draft_path.stem.replace("-", " ").title()
-    if "excerpt" not in post.metadata:
-        post.metadata["excerpt"] = ""
+    if not post.metadata.get("excerpt"):
+        post.metadata["excerpt"] = _derive_excerpt(post.content)
 
     post_path.parent.mkdir(exist_ok=True)
     with open(post_path, "wb") as file_handle:

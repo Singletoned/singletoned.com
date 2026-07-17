@@ -86,4 +86,4 @@ Drafts may include authoring-time placeholders such as:
 {{insert: an example block of AI generated content}}
 ```
 
-`just process` resolves those placeholders in place via Pi. `just publish` now runs the same processing step automatically before publishing.
+`just process` resolves those placeholders in place via Pi. `just publish` now runs the same processing step automatically before publishing. If a post does not already have an `excerpt`, publishing fills one in automatically from the first sentence of the first body paragraph so the homepage has a snippet.

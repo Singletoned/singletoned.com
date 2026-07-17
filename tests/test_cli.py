@@ -51,6 +51,18 @@ class CliHelpersTest(unittest.TestCase):
             cli._idea_notes_for_draft("Test Idea", content), "## Notes\n\nA strong opening thought."
         )
 
+    def test_derive_excerpt_uses_first_sentence_from_first_body_paragraph(self):
+        content = (
+            "# Test Post\n\n"
+            "This is the first sentence. Here is another sentence.\n\n"
+            "A later paragraph.\n"
+        )
+        self.assertEqual(cli._derive_excerpt(content), "This is the first sentence.")
+
+    def test_derive_excerpt_strips_markdown_links(self):
+        content = "Read [Simon Willison](https://simonwillison.net/) for more.\n"
+        self.assertEqual(cli._derive_excerpt(content), "Read Simon Willison for more.")
+
 
 class CliWorkflowTest(unittest.TestCase):
     def test_process_draft_with_pi_returns_zero_when_no_placeholders_exist(self):
@@ -124,7 +136,9 @@ class CliWorkflowTest(unittest.TestCase):
             post_path = posts_dir / "test-post.md"
             self.assertTrue(post_path.exists())
             self.assertFalse(draft_path.exists())
-            self.assertIn("[Slashdot](https://slashdot.org/)", post_path.read_text())
+            post_content = post_path.read_text()
+            self.assertIn("[Slashdot](https://slashdot.org/)", post_content)
+            self.assertIn("excerpt: Body with Slashdot", post_content)
 
     def test_deploy_runs_check_then_netlify(self):
         calls = []

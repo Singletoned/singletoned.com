@@ -1,6 +1,6 @@
 ---
 date: '2026-07-17'
-excerpt: ''
+excerpt: It's been a long time since I wrote the first blog on this post.
 title: Second Post
 ---
 
