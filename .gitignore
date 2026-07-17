@@ -52,3 +52,6 @@ debug.log
 *~ 
 .aider*
 
+
+# Local Netlify folder
+.netlify
