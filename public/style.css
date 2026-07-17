@@ -13,7 +13,9 @@
   --color-focus: #c84f00;
   --color-ai-bg: #fff4d6;
   --color-ai-border: #9f6b00;
-  --font-body: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --font-body:
+    "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia,
+    serif;
   --font-ui: Inter, "Helvetica Neue", Arial, sans-serif;
   --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
   --space-1: 0.25rem;
@@ -25,13 +27,13 @@
   --space-7: 3rem;
   --space-8: 4rem;
   --radius: 0.4rem;
-  --shadow-raised: 0 1px 0 rgba(255, 255, 255, 0.95) inset,
-    0 0 0 1px var(--color-border-strong),
-    0 0.2rem 0 0 rgba(72, 61, 47, 0.85),
+  --shadow-raised:
+    0 1px 0 rgba(255, 255, 255, 0.95) inset,
+    0 0 0 1px var(--color-border-strong), 0 0.2rem 0 0 rgba(72, 61, 47, 0.85),
     0 0.45rem 0.8rem -0.55rem var(--color-shadow);
-  --shadow-pressed: 0 1px 0 rgba(255, 255, 255, 0.5) inset,
-    0 0 0 1px var(--color-border-strong),
-    0 0.08rem 0 0 rgba(72, 61, 47, 0.9);
+  --shadow-pressed:
+    0 1px 0 rgba(255, 255, 255, 0.5) inset,
+    0 0 0 1px var(--color-border-strong), 0 0.08rem 0 0 rgba(72, 61, 47, 0.9);
 }
 
 * {

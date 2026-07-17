@@ -1,6 +1,4 @@
-{% extends "layout.html" %}
-
-{% block content %}
+{% extends "layout.html" %} {% block content %}
 <section class="hero">
   <p class="eyebrow">Writing</p>
   <h1>Recent posts</h1>
@@ -24,11 +22,12 @@
             <span class="tag">#{{ tag }}</span>
             {% endfor %}
           </div>
-          {% endif %}
-          {% if post.excerpt %}
+          {% endif %} {% if post.excerpt %}
           <p class="excerpt">{{ post.excerpt }}</p>
           {% endif %}
-          <p class="read-more">Read post <span aria-hidden="true">&rarr;</span></p>
+          <p class="read-more">
+            Read post <span aria-hidden="true">&rarr;</span>
+          </p>
         </a>
       </article>
     </li>
@@ -40,5 +39,4 @@
   <h2>No posts yet</h2>
   <p>Create the first draft when you are ready.</p>
 </section>
-{% endif %}
-{% endblock %}
+{% endif %} {% endblock %}

@@ -268,26 +268,36 @@ Manual checks:
 ## Risks and Mitigations
 
 ### Risk: Over-designing too early
+
 Mitigation:
+
 - Keep phase 1 limited to refresh plus cleanup
 - Avoid building a grand design system before proving it on a few templates
 
 ### Risk: Framework choice becomes a distraction
+
 Mitigation:
+
 - Start with custom CSS unless a real limitation appears
 
 ### Risk: Unclear homepage identity
+
 Mitigation:
+
 - Prioritise recent writing first
 - Keep project surfacing for a later focused pass
 
 ### Risk: Workflow tooling before real workflow exists
+
 Mitigation:
+
 - In phase 2, start with the smallest possible capture model
 - Let actual usage shape the tooling
 
 ### Risk: AI-content marking becomes inconsistent
+
 Mitigation:
+
 - Define the pattern in `DESIGN.md`
 - Treat it as a reusable rule, not a page-specific exception
 
