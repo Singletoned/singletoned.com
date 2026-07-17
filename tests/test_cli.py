@@ -104,6 +104,33 @@ class CliWorkflowTest(unittest.TestCase):
                     ):
                         cli._process_draft_with_pi(draft_path)
 
+    def test_ensure_tags_with_pi_returns_zero_when_tags_exist(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            draft_path = Path(temp_dir) / "draft.md"
+            draft_path.write_text("---\ntitle: Tagged\ntags: [ai, nostalgia]\n---\n\nBody\n")
+
+            with mock.patch.object(cli, "_run_pi_tag_prompt") as run_pi:
+                tag_count = cli._ensure_tags_with_pi(draft_path)
+
+            self.assertEqual(tag_count, 0)
+            run_pi.assert_not_called()
+
+    def test_ensure_tags_with_pi_adds_tags_when_missing(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            draft_path = Path(temp_dir) / "draft.md"
+            draft_path.write_text("---\ntitle: Tagged\n---\n\nBody\n")
+
+            def fake_run(path):
+                self.assertEqual(path, draft_path)
+                draft_path.write_text("---\ntitle: Tagged\ntags: [ai, writing]\n---\n\nBody\n")
+
+            with mock.patch.object(cli, "_run_pi_tag_prompt", side_effect=fake_run):
+                with mock.patch("cli.shutil.which", return_value="/usr/bin/pi"):
+                    tag_count = cli._ensure_tags_with_pi(draft_path)
+
+            self.assertEqual(tag_count, 2)
+            self.assertIn("tags: [ai, writing]", draft_path.read_text())
+
     def test_publish_processes_draft_before_writing_post(self):
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)
@@ -117,7 +144,12 @@ class CliWorkflowTest(unittest.TestCase):
             def fake_process(path):
                 self.assertEqual(path, draft_path)
                 draft_path.write_text(
-                    "---\ntitle: Test Post\ndate: 2026-07-17\n---\n\nBody with [Slashdot](https://slashdot.org/)\n"
+                    "---\n"
+                    "title: Test Post\n"
+                    "date: 2026-07-17\n"
+                    "tags: [ai, blogging]\n"
+                    "---\n\n"
+                    "Body with [Slashdot](https://slashdot.org/)\n"
                 )
                 return 1
 
@@ -129,7 +161,8 @@ class CliWorkflowTest(unittest.TestCase):
                         with mock.patch.object(
                             cli, "_process_draft_with_pi", side_effect=fake_process
                         ):
-                            cli.publish("test-post")
+                            with mock.patch.object(cli, "_ensure_tags_with_pi", return_value=2):
+                                cli.publish("test-post")
             finally:
                 os.chdir(original_cwd)
 
@@ -139,6 +172,7 @@ class CliWorkflowTest(unittest.TestCase):
             post_content = post_path.read_text()
             self.assertIn("[Slashdot](https://slashdot.org/)", post_content)
             self.assertIn("excerpt: Body with Slashdot", post_content)
+            self.assertIn("tags:", post_content)
 
     def test_ensure_clean_working_tree_fails_with_uncommitted_changes(self):
         with mock.patch.object(cli, "_command_output", return_value=" M cli.py\n"):

@@ -1,6 +1,7 @@
 ---
 date: "2026-07-17"
 excerpt: It's been a long time since I wrote the first blog on this post.  As always, I keep meaning to write stuff, and never quite get around to it.
+tags: [ai, blogging]
 title: Second Post
 ---
 

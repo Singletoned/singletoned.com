@@ -29,6 +29,14 @@ PI_PROCESS_PROMPT = (
     "If you cannot complete the task confidently, do not make partial changes; explain "
     "the problem instead."
 )
+PI_TAG_PROMPT = (
+    "Update the draft article at {draft_path} in place. "
+    "If the frontmatter already has a non-empty tags field, leave the file unchanged. "
+    "Otherwise add a tags field in frontmatter with 2 to 4 short lowercase category tags "
+    "that fit the article, using simple slug-like names such as ai, nostalgia, writing, or "
+    "football-data. Preserve all existing prose and frontmatter fields. Do not add any "
+    "explanatory text outside the file."
+)
 PI_COMMAND = "pi"
 NETLIFY_COMMAND = "netlify"
 GIT_REMOTE = "origin"
@@ -202,6 +210,36 @@ def _process_draft_with_pi(draft_path: Path) -> int:
         )
 
     return len(placeholders)
+
+
+def _run_pi_tag_prompt(draft_path: Path):
+    subprocess.run(
+        [
+            PI_COMMAND,
+            "--approve",
+            "--no-session",
+            "-p",
+            PI_TAG_PROMPT.format(draft_path=draft_path.as_posix()),
+        ],
+        check=True,
+    )
+
+
+def _ensure_tags_with_pi(draft_path: Path) -> int:
+    post = frontmatter.load(draft_path)
+    if post.metadata.get("tags"):
+        return 0
+
+    if shutil.which(PI_COMMAND) is None:
+        raise RuntimeError("pi command not found in PATH")
+
+    _run_pi_tag_prompt(draft_path)
+
+    updated_post = frontmatter.load(draft_path)
+    if not updated_post.metadata.get("tags"):
+        raise RuntimeError(f"Missing tags after processing {draft_path}")
+
+    return len(updated_post.metadata["tags"])
 
 
 def complete_drafts() -> list[str]:
@@ -413,6 +451,10 @@ def publish(
     resolved_count = _process_draft_with_pi(draft_path)
     if resolved_count:
         print(f"Resolved {resolved_count} draft instruction(s) before publishing.")
+
+    added_tag_count = _ensure_tags_with_pi(draft_path)
+    if added_tag_count:
+        print(f"Added {added_tag_count} tag(s) before publishing.")
 
     post = frontmatter.load(draft_path)
 
