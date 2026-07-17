@@ -33,3 +33,8 @@ Run `just test` after changes that affect templates, links, content paths, stati
 Recent commits use short, imperative summaries such as `Fix date sorting to handle mixed string and datetime.date types`. Keep commits small and focused. Pull requests should describe the user-visible change, list verification commands such as `just check`, link related issues when applicable, and include screenshots for layout or visual content changes.
 
 - Clearly mark any AI-generated text in site content, both visually and in the HTML. Never present AI-generated text as if it were human-authored.
+
+## Learned Rules (managed by /learn)
+<!-- pi:learn:start -->
+- Commit draft and idea content files by default. If a draft or idea should stay out of history, the user can remove it later; do not leave such content uncommitted unless asked.
+<!-- pi:learn:end -->

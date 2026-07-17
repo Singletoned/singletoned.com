@@ -28,6 +28,7 @@ PI_PROCESS_PROMPT = (
     "the problem instead."
 )
 PI_COMMAND = "pi"
+NETLIFY_COMMAND = "netlify"
 
 app = typer.Typer(help="Blog management CLI")
 
@@ -458,9 +459,12 @@ def lint():
 
 @app.command()
 def deploy():
-    """Deploy the site (placeholder - implement your deployment)."""
-    print("Deploy command not yet implemented.")
-    print("Add your deployment logic here (e.g., rsync, aws s3 sync, etc.)")
+    """Build, test, and deploy the site to Netlify."""
+    if shutil.which(NETLIFY_COMMAND) is None:
+        raise RuntimeError("netlify command not found in PATH")
+
+    check()
+    subprocess.run([NETLIFY_COMMAND, "deploy", "--prod", "--dir=public"], check=True)
 
 
 if __name__ == "__main__":

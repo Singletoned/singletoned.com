@@ -2,6 +2,8 @@
 
 Static site for singletoned.com.
 
+Deployment is via Netlify.
+
 ## Install
 
 ```bash
@@ -16,6 +18,22 @@ just dev
 just test
 just check
 ```
+
+## Deployment
+
+Local verification:
+
+```bash
+just check
+```
+
+Netlify can build this repo using `netlify.toml`, or you can deploy manually with the Netlify CLI:
+
+```bash
+netlify deploy --prod
+```
+
+The generated site output lives in `public/`.
 
 ## Content workflow
 

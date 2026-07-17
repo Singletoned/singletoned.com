@@ -126,6 +126,20 @@ class CliWorkflowTest(unittest.TestCase):
             self.assertFalse(draft_path.exists())
             self.assertIn("[Slashdot](https://slashdot.org/)", post_path.read_text())
 
+    def test_deploy_runs_check_then_netlify(self):
+        calls = []
+
+        def fake_run(command, check):
+            calls.append(command)
+
+        with mock.patch("cli.shutil.which", return_value="/usr/bin/netlify"):
+            with mock.patch.object(cli, "check") as check_command:
+                with mock.patch("cli.subprocess.run", side_effect=fake_run):
+                    cli.deploy()
+
+        check_command.assert_called_once_with()
+        self.assertEqual(calls, [["netlify", "deploy", "--prod", "--dir=public"]])
+
     def test_idea_command_prints_exact_follow_up_command(self):
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)

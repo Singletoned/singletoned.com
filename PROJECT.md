@@ -65,7 +65,7 @@ The goal is not novelty. The goal is clarity.
 - Keep the static-site architecture unless a real problem requires change.
 - Prefer mostly native HTML plus a small, understandable custom stylesheet.
 - Additional pipelines are acceptable if they are automated and justified.
-- Stay on the current hosting path unless there is a concrete reason to move.
+- Use Netlify as the current hosting path unless there is a concrete reason to move.
 - Avoid unnecessary complexity, client-side features, analytics, cookies, and visual gimmicks.
 
 ## Workflow Direction

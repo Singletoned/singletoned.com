@@ -20,7 +20,7 @@ A secondary goal is to use the site as a test bed for a design style/system buil
 - Content in `posts/` and `pages/`
 - CSS in `static/style.css`
 - Output in `public/`
-- Vercel config exists (`vercel.json`)
+- Netlify config exists (`netlify.toml`)
 - Current templates and styling are minimal but visually unpolished
 - Some content is inaccurate, notably `pages/about.md`
 - `posts/cloudflare-is-surprisingly-bad.md` should not remain in the live site
@@ -61,7 +61,7 @@ Confirmed decisions:
 - TredMarx stays available but should be removed or de-emphasised from top-level navigation
 - AI-written content is allowed only if it is clearly marked as AI-generated and not made to look human-authored
 - AI-content marking should be a reusable site-wide pattern, not a one-off exception
-- Stay on current hosting unless there is a concrete reason to change
+- Stay on Netlify unless there is a concrete reason to change
 - Deploy in small safe increments where practical
 
 ## Phase 1: Visual Refresh and Structural Cleanup
@@ -298,7 +298,7 @@ Mitigation:
 - How much of native form/control appearance should be preserved directly vs lightly reinterpreted?
 - Should web fonts be introduced, and under what constraints?
 - What exact shape should the writing inbox take in phase 2?
-- Is Vercel definitely the deployment target, or merely the current default?
+- Is Netlify definitely the deployment target, or merely the current default?
 
 ## Definition of Done
 

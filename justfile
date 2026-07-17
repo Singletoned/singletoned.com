@@ -41,6 +41,10 @@ add-image post-name image-name url:
 clean:
     blog clean
 
+# Deploy to Netlify
+deploy:
+    blog deploy
+
 # Show available commands
 help:
     @just --list

@@ -1,6 +1,0 @@
-{
-  "buildCommand": "pip install -r requirements.txt && python build.py",
-  "outputDirectory": "public",
-  "installCommand": "pip install -r requirements.txt",
-  "devCommand": "python scripts/dev.py"
-}
