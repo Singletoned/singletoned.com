@@ -25,7 +25,11 @@ new title:
 draft-from-idea idea-name:
     blog draft-from-idea {{ idea-name }}
 
-# Publish a draft article (moves from drafts/ to posts/ with metadata)
+# Resolve AI instruction placeholders in a draft
+process filename:
+    blog process {{ filename }}
+
+# Publish a draft article (processes instructions, then moves from drafts/ to posts/)
 publish filename:
     blog publish {{ filename }}
 

@@ -15,6 +15,19 @@ import typer
 DRAFTS_DIR = Path("drafts")
 IDEAS_DIR = Path("ideas")
 TEST_PATTERN = "test_*.py"
+PLACEHOLDER_PATTERN = re.compile(r"\{\{[^{}]+\}\}")
+PI_PROCESS_PROMPT = (
+    "Process the draft article at {draft_path} in place. "
+    "Resolve every authoring-time placeholder of the form {{{{command: instruction}}}}. "
+    "Replace {{{{link: ...}}}} placeholders with the correct Markdown links. "
+    "Replace {{{{insert: ...}}}} placeholders with suitable content, and clearly mark any "
+    "AI-generated prose using the site's documented HTML pattern for AI-generated content. "
+    "Preserve the existing frontmatter and all unrelated writing. "
+    "Do not leave any {{{{...}}}} placeholders unresolved. "
+    "If you cannot complete the task confidently, do not make partial changes; explain "
+    "the problem instead."
+)
+PI_COMMAND = "pi"
 
 app = typer.Typer(help="Blog management CLI")
 
@@ -121,6 +134,44 @@ def _load_idea(idea_name: str):
     for idea in _list_markdown_stems(IDEAS_DIR):
         print(f"  - {idea}")
     raise typer.Exit(1)
+
+
+def _find_instruction_placeholders(content: str) -> list[str]:
+    return PLACEHOLDER_PATTERN.findall(content)
+
+
+def _run_pi_processing_prompt(draft_path: Path):
+    subprocess.run(
+        [
+            PI_COMMAND,
+            "--approve",
+            "--no-session",
+            "-p",
+            PI_PROCESS_PROMPT.format(draft_path=draft_path.as_posix()),
+        ],
+        check=True,
+    )
+
+
+def _process_draft_with_pi(draft_path: Path) -> int:
+    content = draft_path.read_text()
+    placeholders = _find_instruction_placeholders(content)
+    if not placeholders:
+        return 0
+
+    if shutil.which(PI_COMMAND) is None:
+        raise RuntimeError("pi command not found in PATH")
+
+    _run_pi_processing_prompt(draft_path)
+
+    remaining = _find_instruction_placeholders(draft_path.read_text())
+    if remaining:
+        placeholders_text = ", ".join(remaining)
+        raise RuntimeError(
+            f"Unresolved draft instructions remain in {draft_path}: {placeholders_text}"
+        )
+
+    return len(placeholders)
 
 
 def complete_drafts() -> list[str]:
@@ -232,10 +283,32 @@ def draft_from_idea(
 
 
 @app.command()
+def process(
+    draft: str = typer.Argument(..., help="Draft name to process", autocompletion=complete_drafts),
+):
+    """Resolve AI instruction placeholders in a draft in place."""
+    draft_path = _draft_path(draft)
+    if not draft_path.exists():
+        print(f"Draft not found: {draft_path}")
+        print("Available drafts:")
+        for name in _list_markdown_stems(DRAFTS_DIR):
+            print(f"  - {name}")
+        raise typer.Exit(1)
+
+    print(f"Processing draft instructions in: {draft_path}")
+    resolved_count = _process_draft_with_pi(draft_path)
+    if resolved_count == 0:
+        print("No draft instructions found.")
+        return
+
+    print(f"Resolved {resolved_count} draft instruction(s).")
+
+
+@app.command()
 def publish(
     draft: str = typer.Argument(..., help="Draft name to publish", autocompletion=complete_drafts),
 ):
-    """Publish a draft article (moves from drafts/ to posts/ with metadata)."""
+    """Process and publish a draft article."""
     draft_path = _draft_path(draft)
     post_path = Path("posts") / draft_path.name
 
@@ -245,6 +318,10 @@ def publish(
         for name in _list_markdown_stems(DRAFTS_DIR):
             print(f"  - {name}")
         raise typer.Exit(1)
+
+    resolved_count = _process_draft_with_pi(draft_path)
+    if resolved_count:
+        print(f"Resolved {resolved_count} draft instruction(s) before publishing.")
 
     post = frontmatter.load(draft_path)
 
