@@ -27,13 +27,13 @@ Local verification:
 just check
 ```
 
-Netlify can build this repo using `netlify.toml`, or you can deploy manually with the Netlify CLI:
+Use the repository deploy command:
 
 ```bash
-netlify deploy --prod
+just deploy
 ```
 
-The generated site output lives in `public/`.
+That command runs local checks, pushes `main` to GitHub, and waits for Netlify's GitHub-connected production deploy to finish. The generated site output lives in `public/`.
 
 ## Content workflow
 

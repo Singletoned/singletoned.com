@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 """Blog CLI with shell completion for draft and idea names."""
 
+import json
 import re
 import shutil
 import subprocess
 import sys
+import time
 import urllib.request
 from datetime import date, datetime
 from pathlib import Path
@@ -29,6 +31,10 @@ PI_PROCESS_PROMPT = (
 )
 PI_COMMAND = "pi"
 NETLIFY_COMMAND = "netlify"
+GIT_REMOTE = "origin"
+PRODUCTION_BRANCH = "main"
+NETLIFY_DEPLOY_TIMEOUT_SECONDS = 300
+NETLIFY_POLL_INTERVAL_SECONDS = 5
 
 app = typer.Typer(help="Blog management CLI")
 
@@ -206,6 +212,67 @@ def complete_drafts() -> list[str]:
 def complete_ideas() -> list[str]:
     """Return list of idea names for completion."""
     return _list_markdown_stems(IDEAS_DIR)
+
+
+def _command_output(command: list[str]) -> str:
+    completed = subprocess.run(command, check=True, capture_output=True, text=True)
+    return completed.stdout
+
+
+def _ensure_clean_working_tree():
+    status = _command_output(["git", "status", "--short"]).strip()
+    if status:
+        raise RuntimeError(f"Refusing to deploy with uncommitted changes:\n{status}")
+
+
+def _linked_netlify_site_id() -> str | None:
+    if shutil.which(NETLIFY_COMMAND) is None:
+        return None
+
+    status = json.loads(_command_output([NETLIFY_COMMAND, "status", "--json"]))
+    site_data = status.get("siteData", {})
+    return site_data.get("site-id")
+
+
+def _latest_netlify_deploy_for_commit(site_id: str, commit_sha: str):
+    deploys = json.loads(
+        _command_output(
+            [
+                NETLIFY_COMMAND,
+                "api",
+                "listSiteDeploys",
+                "--data",
+                json.dumps({"site_id": site_id, "page": 1, "per_page": 20}),
+            ]
+        )
+    )
+    for deploy in deploys:
+        if deploy.get("commit_ref") == commit_sha:
+            return deploy
+    return None
+
+
+def _wait_for_netlify_deploy(site_id: str, commit_sha: str):
+    deadline = time.monotonic() + NETLIFY_DEPLOY_TIMEOUT_SECONDS
+    while time.monotonic() < deadline:
+        deploy = _latest_netlify_deploy_for_commit(site_id, commit_sha)
+        if deploy is None:
+            time.sleep(NETLIFY_POLL_INTERVAL_SECONDS)
+            continue
+
+        state = deploy.get("state")
+        if state == "ready":
+            print(f"Netlify deploy ready: {deploy.get('ssl_url')}")
+            print(f"Unique deploy URL: {deploy.get('deploy_ssl_url')}")
+            return
+
+        if state == "error":
+            message = deploy.get("error_message") or "unknown Netlify deploy error"
+            raise RuntimeError(f"Netlify deploy failed for {commit_sha}: {message}")
+
+        time.sleep(NETLIFY_POLL_INTERVAL_SECONDS)
+
+    raise RuntimeError(f"Timed out waiting for Netlify deploy for {commit_sha}")
 
 
 @app.command()
@@ -482,12 +549,20 @@ def lint():
 
 @app.command()
 def deploy():
-    """Build, test, and deploy the site to Netlify."""
-    if shutil.which(NETLIFY_COMMAND) is None:
-        raise RuntimeError("netlify command not found in PATH")
-
+    """Build, test, push to GitHub, and wait for Netlify to deploy production."""
+    _ensure_clean_working_tree()
     check()
-    subprocess.run([NETLIFY_COMMAND, "deploy", "--prod", "--dir=public"], check=True)
+
+    commit_sha = _command_output(["git", "rev-parse", "HEAD"]).strip()
+    subprocess.run(["git", "push", GIT_REMOTE, f"HEAD:{PRODUCTION_BRANCH}"], check=True)
+    print(f"Pushed {commit_sha[:7]} to {GIT_REMOTE}/{PRODUCTION_BRANCH}.")
+
+    site_id = _linked_netlify_site_id()
+    if site_id is None:
+        print("Netlify CLI not found; wait for the GitHub-triggered deploy in Netlify.")
+        return
+
+    _wait_for_netlify_deploy(site_id, commit_sha)
 
 
 if __name__ == "__main__":

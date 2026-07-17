@@ -140,19 +140,29 @@ class CliWorkflowTest(unittest.TestCase):
             self.assertIn("[Slashdot](https://slashdot.org/)", post_content)
             self.assertIn("excerpt: Body with Slashdot", post_content)
 
-    def test_deploy_runs_check_then_netlify(self):
-        calls = []
+    def test_ensure_clean_working_tree_fails_with_uncommitted_changes(self):
+        with mock.patch.object(cli, "_command_output", return_value=" M cli.py\n"):
+            with self.assertRaisesRegex(RuntimeError, "Refusing to deploy"):
+                cli._ensure_clean_working_tree()
 
-        def fake_run(command, check):
-            calls.append(command)
-
-        with mock.patch("cli.shutil.which", return_value="/usr/bin/netlify"):
+    def test_deploy_runs_check_then_pushes_and_waits(self):
+        with mock.patch.object(cli, "_ensure_clean_working_tree") as ensure_clean:
             with mock.patch.object(cli, "check") as check_command:
-                with mock.patch("cli.subprocess.run", side_effect=fake_run):
-                    cli.deploy()
+                with mock.patch.object(cli, "_command_output", return_value="abc123\n"):
+                    with mock.patch("cli.subprocess.run") as run_command:
+                        with mock.patch.object(
+                            cli, "_linked_netlify_site_id", return_value="site-123"
+                        ):
+                            with mock.patch.object(
+                                cli, "_wait_for_netlify_deploy"
+                            ) as wait_for_deploy:
+                                with redirect_stdout(io.StringIO()):
+                                    cli.deploy()
 
+        ensure_clean.assert_called_once_with()
         check_command.assert_called_once_with()
-        self.assertEqual(calls, [["netlify", "deploy", "--prod", "--dir=public"]])
+        run_command.assert_called_once_with(["git", "push", "origin", "HEAD:main"], check=True)
+        wait_for_deploy.assert_called_once_with("site-123", "abc123")
 
     def test_idea_command_prints_exact_follow_up_command(self):
         with tempfile.TemporaryDirectory() as temp_dir:
