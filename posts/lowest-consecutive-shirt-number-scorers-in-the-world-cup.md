@@ -1,11 +1,15 @@
 ---
+date: '2026-07-18'
+excerpt: There was an interesting discussion on the Football Cliches Podcast that
+  9 Kane, 10 Bellingham, and 11 Rashford all scored in England's 4-2 win over Croatia.
+tags:
+- football-data
+- world-cup
+- football-history
 title: Lowest Consecutive Shirt Number Scorers in the World Cup
-excerpt: ""
 ---
 
-# Lowest Consecutive Shirt Number Scorers in the World Cup
-
-There was an interesting discussion on the {{link:Football Cliches Podcast}} that 9 Kane, 10 Bellingham, and 11 Rashford all scored in England's 4-2 win over Croatia. They speculated whether a back 4 had ever combined to score in the same match. I realised that wouldn't be too hard to work out.
+There was an interesting discussion on the [Football Cliches Podcast](https://www.footballcliches.com/) that 9 Kane, 10 Bellingham, and 11 Rashford all scored in England's 4-2 win over Croatia. They speculated whether a back 4 had ever combined to score in the same match. I realised that wouldn't be too hard to work out.
 
 It turns out the answer is the 1974 World Cup match of Yugoslavia vs Zaire:
 
