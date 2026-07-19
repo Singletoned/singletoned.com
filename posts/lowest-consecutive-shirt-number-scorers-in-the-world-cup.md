@@ -1,11 +1,12 @@
 ---
-date: '2026-07-18'
-excerpt: There was an interesting discussion on the Football Cliches Podcast that
+date: "2026-07-18"
+excerpt:
+  There was an interesting discussion on the Football Cliches Podcast that
   9 Kane, 10 Bellingham, and 11 Rashford all scored in England's 4-2 win over Croatia.
 tags:
-- football-data
-- world-cup
-- football-history
+  - football-data
+  - world-cup
+  - football-history
 title: Lowest Consecutive Shirt Number Scorers in the World Cup
 ---
 
