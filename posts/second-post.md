@@ -16,7 +16,5 @@ I'm in the [Simon Willison](https://simonwillison.net/) camp, that AI is a usefu
 However I do agree that we shouldn't pass off AI generated content as human content, so I've added a markup element and visual styling for all AI generated content on this site. There probably won't be a lot of it, but automatic summaries might be an example. A sample is below:
 
 <div class="ai-generated" data-authorship="ai" aria-label="AI-generated content">
-<p class="ai-generated__label">AI-generated content</p>
-
 <p>This is an example of clearly marked AI-generated supporting text. It is useful for things like summaries or boilerplate, but it should never be presented as though a person wrote it unassisted.</p>
 </div>

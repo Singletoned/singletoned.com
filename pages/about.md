@@ -3,8 +3,6 @@ title: About
 ---
 
 <div class="ai-generated" data-authorship="ai" aria-label="AI-generated content">
-<p class="ai-generated__label">AI-generated content</p>
-
 <p>This page was rewritten by AI during a site redesign and is intentionally marked so it does not read as human-authored writing.</p>
 
 <p>This site is a static website for Ed Singleton. It is used for writing, sharing projects, and publishing occasional app-related pages when required.</p>
