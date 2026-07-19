@@ -60,8 +60,9 @@ Rules:
 Current pattern:
 
 - wrapper class: `.ai-generated`
-- visible label: `.ai-generated__label`
 - semantic marker: `data-authorship="ai"`
+- accessible marker: `aria-label="AI-generated content"`
+- visible badge: rendered in CSS, not stored as document content
 
 ## Phase 1 Focus
 
