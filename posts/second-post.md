@@ -5,8 +5,6 @@ tags: [ai, blogging]
 title: Second Post
 ---
 
-# Second Post
-
 It's been a long time since I wrote the first blog on this post. As always, I keep meaning to write stuff, and never quite get around to it.
 
 The previous post sounds slightly naive already. It was written when the fact that AI could usefully answer questions was quite exciting. It's all in a very different place now, to the extent that there are large numbers of people arguing very vehemently that it is a bad thing.
