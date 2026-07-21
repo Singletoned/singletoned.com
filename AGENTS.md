@@ -6,17 +6,17 @@ This repository builds a simple static blog. Core Python code lives in `build.py
 
 ## Build, Test, and Development Commands
 
-Use `just` recipes when available:
+Use `mate` targets:
 
-- `just install` installs the package in editable mode with `uv pip install -e .`.
-- `just build` renders Markdown, templates, and static assets into `public/`.
-- `just dev` starts the live-reload development server.
-- `just test` builds the site and runs the internal link checker.
-- `just check` runs the build-and-test path used before deployment.
-- `just format` formats Python with Ruff.
-- `just lint` runs Ruff checks.
+- `mate install` installs the package in editable mode with `uv pip install -e .`.
+- `mate build` renders Markdown, templates, and static assets into `public/`.
+- `mate dev` starts the live-reload development server.
+- `mate test` builds the site and runs the internal link checker.
+- `mate check` runs the build-and-test path used before deployment.
+- `mate format` formats Python with Ruff.
+- `mate lint` runs Ruff checks.
 
-For content workflows, use `just new "Post Title"`, `just publish post-slug`, and `just add-image post-slug image-name path-or-url`.
+For content workflows, use `mate new "Post Title"`, `mate publish post-slug`, and `mate add-image post-slug image-name path-or-url`.
 
 Drafts may also contain authoring-time AI instructions using a placeholder syntax such as `{{command: instruction}}`, for example `{{link: Slashdot}}`. This mini-spec is intentionally in flux and subject to change. When publishing or otherwise processing an article, treat these placeholders as instructions for the AI agent to resolve before the final content is published.
 
@@ -26,11 +26,11 @@ Python targets 3.10+ and uses Ruff with 100-character lines, double quotes, spac
 
 ## Testing Guidelines
 
-Run `just test` after changes that affect templates, links, content paths, static assets, or build logic. The current test suite is an executable Python link checker rather than a unit-test package. It expects `public/` to exist, so use the `just test` recipe instead of invoking `tests/link_checker.py` directly.
+Run `mate test` after changes that affect templates, links, content paths, static assets, or build logic. The current test suite is an executable Python link checker rather than a unit-test package. It expects `public/` to exist, so use the `mate test` target instead of invoking `tests/link_checker.py` directly.
 
 ## Commit & Pull Request Guidelines
 
-Recent commits use short, imperative summaries such as `Fix date sorting to handle mixed string and datetime.date types`. Keep commits small and focused. Pull requests should describe the user-visible change, list verification commands such as `just check`, link related issues when applicable, and include screenshots for layout or visual content changes.
+Recent commits use short, imperative summaries such as `Fix date sorting to handle mixed string and datetime.date types`. Keep commits small and focused. Pull requests should describe the user-visible change, list verification commands such as `mate check`, link related issues when applicable, and include screenshots for layout or visual content changes.
 
 - Clearly mark any AI-generated text in site content, both visually and in the HTML. Never present AI-generated text as if it were human-authored.
 

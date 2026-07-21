@@ -236,8 +236,8 @@ Keep the system Emacs-friendly and avoid hiding content behind custom tooling.
 
 Run:
 
-- `just build`
-- `just test`
+- `mate build`
+- `mate test`
 
 Manual checks:
 

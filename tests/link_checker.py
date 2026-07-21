@@ -17,7 +17,7 @@ class LinkChecker:
         print("Checking internal links...")
 
         if not self.public_dir.exists():
-            print('Public directory not found. Run "just build" first.')
+            print('Public directory not found. Run "mate build" first.')
             sys.exit(1)
 
         html_files = list(self.public_dir.glob("**/*.html"))
