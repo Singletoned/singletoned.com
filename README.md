@@ -64,7 +64,7 @@ mate process draft-name
 Create a draft directly:
 
 ```bash
-mate new "Post title"
+mate draft "Post title"
 ```
 
 Publish a draft:

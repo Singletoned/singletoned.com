@@ -16,7 +16,7 @@ Use `mate` targets:
 - `mate format` formats Python with Ruff.
 - `mate lint` runs Ruff checks.
 
-For content workflows, use `mate new "Post Title"`, `mate publish post-slug`, and `mate add-image post-slug image-name path-or-url`.
+For content workflows, use `mate draft "Post Title"`, `mate publish post-slug`, and `mate add-image post-slug image-name path-or-url`. `mate new` is also available as an alias for creating a draft.
 
 Drafts may also contain authoring-time AI instructions using a placeholder syntax such as `{{command: instruction}}`, for example `{{link: Slashdot}}`. This mini-spec is intentionally in flux and subject to change. When publishing or otherwise processing an article, treat these placeholders as instructions for the AI agent to resolve before the final content is published.
 
