@@ -76,6 +76,9 @@ class BlogBuilder:
             post_data = {
                 **post.metadata,
                 "content": self.render_markdown(post.content),
+                "tldr_html": self.render_markdown(post.metadata["tldr"])
+                if post.metadata.get("tldr")
+                else "",
                 "slug": post_file.stem,
                 "reading_time": self.calculate_reading_time(post.content),
             }

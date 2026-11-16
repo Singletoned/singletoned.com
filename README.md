@@ -67,6 +67,15 @@ Create a draft directly:
 mate draft "Post title"
 ```
 
+Add an optional TL;DR to the draft's YAML front matter. It supports Markdown and appears in a labelled box before the article:
+
+```yaml
+tldr: |
+  A short summary with **emphasis** or a [link](https://example.com).
+```
+
+Mark any AI-generated summary using the site's AI-generated content pattern.
+
 Publish a draft:
 
 ```bash

@@ -16,6 +16,12 @@
     {% endif %}
   </header>
 
+  {% if post.tldr_html %}
+  <section class="tldr prose" aria-labelledby="tldr-heading">
+    <h2 id="tldr-heading">TL;DR</h2>
+    {{ post.tldr_html | safe }}
+  </section>
+  {% endif %}
   <div class="post-content prose">{{ post.content | safe }}</div>
 </article>
 
