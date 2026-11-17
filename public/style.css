@@ -375,6 +375,20 @@ img {
   box-shadow: 0 0.7rem 1.5rem -1rem var(--color-shadow);
 }
 
+.tldr {
+  margin: 0 0 var(--space-5);
+  padding: var(--space-4);
+  background: var(--color-surface-strong);
+  border: 2px solid var(--color-border-strong);
+  border-radius: var(--radius);
+}
+
+.tldr h2 {
+  margin: 0 0 var(--space-2);
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+}
+
 .ai-generated {
   margin: 0 0 var(--space-5);
   padding: var(--space-4);

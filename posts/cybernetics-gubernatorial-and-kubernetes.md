@@ -19,7 +19,7 @@ It then went to Latin, as the word "gubernator" which still means helmsman, and 
 
 Then it split, going through French as "governer", before coming to English as "governor".
 
-However US English in the early 1700s, grabbed it straight from the Greek as "gubernatorial".
+However US English in the early 1700s, grabbed it straight from the Latin as "gubernatorial".
 
 ## This is fascinating, but what about cybernetics?
 
@@ -42,7 +42,7 @@ Apparently Wiener (ha ha), wasn't the first to coin cybernetics. The French had 
 
 ## Yeah, yeah, but what about cybersex?
 
-Well, like with most sexual innovation, it came about because of Doctor Who. In the 1960s Doctor Who invented "cybermen". The term "cyborg" had already been used, but not by anyone interesting. Doctor Who popularised the term "cybermen", which lead to William Gibson coining the term "cyberspace", and after that everything was cyber. (🤔 Adam Buxton should do a podcast called "Cyber with Rosie").
+Well, like with most sexual innovation, it came about because of Doctor Who. In the 1960s Doctor Who invented "cybermen". The term "cyborg" had already been used, but not by anyone interesting. Doctor Who popularised the term "cybermen", followed by William Gibson coining the term "cyberspace", and after that everything was cyber. (🤔 Adam Buxton should do a podcast called "Cyber with Rosie").
 
 Oh and then Kubernetes came along and recaptured the original Greek meaning, and has gone hard using terms related to on the original meaning: helm, harbour, fleet, etc.
 
