@@ -57,9 +57,7 @@ class LinkChecker:
             self.check_asset(img["src"], str(relative_path), "Image")
 
     def is_external(self, url: str) -> bool:
-        if url.startswith(("http://", "https://", "mailto:", "tel:", "//")):
-            return True
-        return False
+        return bool(url.startswith(("http://", "https://", "mailto:", "tel:", "//")))
 
     def resolve_path(self, url: str, from_page: str) -> str:
         """Resolve a URL relative to the page it's on."""

@@ -127,7 +127,7 @@ def _first_sentence(text: str) -> str:
 def _derive_excerpt(content: str) -> str:
     for block in content.split("\n\n"):
         stripped = block.strip()
-        if not stripped or stripped.startswith("#") or stripped.startswith("<"):
+        if not stripped or stripped.startswith(("#", "<")):
             continue
         excerpt = _strip_markdown_links(stripped)
         excerpt = re.sub(r"`([^`]+)`", r"\1", excerpt)
@@ -466,7 +466,7 @@ def publish(
         post.metadata["excerpt"] = _derive_excerpt(post.content)
 
     post_path.parent.mkdir(exist_ok=True)
-    with open(post_path, "wb") as file_handle:
+    with open(post_path, "w", encoding="utf-8") as file_handle:
         frontmatter.dump(post, file_handle)
 
     draft_path.unlink()

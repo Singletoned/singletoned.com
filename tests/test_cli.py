@@ -231,12 +231,12 @@ class CliWorkflowTest(unittest.TestCase):
                 "A strong opening thought.\n"
             )
 
-            with redirect_stdout(io.StringIO()):
-                with (
-                    mock.patch.object(cli, "IDEAS_DIR", ideas_dir),
-                    mock.patch.object(cli, "DRAFTS_DIR", drafts_dir),
-                ):
-                    cli.draft_from_idea("2026-06-27-test-idea")
+            with (
+                redirect_stdout(io.StringIO()),
+                mock.patch.object(cli, "IDEAS_DIR", ideas_dir),
+                mock.patch.object(cli, "DRAFTS_DIR", drafts_dir),
+            ):
+                cli.draft_from_idea("2026-06-27-test-idea")
 
             draft_path = drafts_dir / "test-idea.md"
             self.assertTrue(draft_path.exists())
