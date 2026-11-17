@@ -23,7 +23,7 @@ However US English in the early 1700s, grabbed it straight from the Greek as "gu
 
 ## This is fascinating, but what about cybernetics?
 
-In 1948, mathematician [Norbert Wiener](https://www.britannica.com/biography/Norbert-Wiener) (ha, ha) published [Cybernetics: Or Control and Communication in the Animal and the Machine](https://libraries.mit.edu/150books/2011/04/04/1948/).
+In 1948, mathematician [Norbert Wiener](https://en.wikipedia.org/wiki/Norbert_Wiener) (ha, ha) published [Cybernetics: Or Control and Communication in the Animal and the Machine](https://libraries.mit.edu/150books/2011/04/04/1948/).
 
 He created the name "cybernetics" from the Greek kybernḗtēs, and used it to mean a feedback control mechanism. And it makes sense.
 
